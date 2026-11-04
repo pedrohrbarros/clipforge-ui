@@ -25,22 +25,25 @@ TypeScript and Tailwind, deployed on Vercel.
 
 ```bash
 npm install
-cp .env.example .env.local   # set NEXT_PUBLIC_API_URL and API_KEY
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL and NEXT_PUBLIC_GOOGLE_CLIENT_ID
 npm run dev                  # http://localhost:3000
 ```
 
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the ClipForge API, no trailing slash |
-| `API_KEY` | Same value as the API's `AUTHORIZATION_KEY` |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google OAuth web client id, the same one the API verifies |
 
-## API key
+## Sign-in
 
-The API requires a shared secret, `AUTHORIZATION_KEY` on the server. The frontend reads the
-same value from `API_KEY`, sends it as `Authorization: Bearer` on every request, and appends
-it as `?token=` to the video and zip URLs the browser loads directly. `next.config.ts` inlines
-`API_KEY` into the browser bundle at build time, so it is visible to anyone using the site;
-that is inherent to a browser that calls the API directly. Changing it needs a rebuild.
+Google only. `components/SignIn.tsx` renders Google's button through `@react-oauth/google`
+with `NEXT_PUBLIC_GOOGLE_CLIENT_ID`; the returned ID token is kept in `sessionStorage`
+(`lib/auth.ts`) and sent as `Authorization: Bearer` on every API call. A 401 clears it and
+shows the sign-in screen again. The header shows the user's picture, name and how many of
+their daily videos are left, and a Sign out button.
+
+While a job runs the page says the user will get an email when it is done, and finished
+shorts play and download from the signed links the API returns.
 
 ## Languages
 
@@ -67,7 +70,7 @@ npm test        # vitest (UsagePanel rendering)
 
 1. Push this repo to GitHub and import it in Vercel. The defaults for Next.js are fine.
 2. Add the environment variables `NEXT_PUBLIC_API_URL` (the Render URL of the API, for
-   example `https://clipforge.onrender.com`) and `API_KEY` (the API's `AUTHORIZATION_KEY`).
+   example `https://clipforge.onrender.com`) and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
 3. On the Render service set `ALLOWED_ORIGINS` to your Vercel URL so CORS allows the
    browser to call the API directly. Uploads go straight from the browser to Render, so
    Vercel's function limits never apply.
@@ -84,6 +87,10 @@ components/Progress.tsx   ember fill and step list
 components/ShortCard.tsx  playable result with download link
 components/UsagePanel.tsx remaining uses per model as progress bars
 components/Logo.tsx       the logo mark (also in public/logo.svg)
+components/SignIn.tsx     Google sign-in screen
+components/UserMenu.tsx   picture, name, daily videos left, sign out
+components/Providers.tsx  GoogleOAuthProvider wrapper
+lib/auth.ts               Google credential store
 components/LanguageSelect.tsx  language dropdown
 components/ThemeToggle.tsx     dark/light switch
 lib/i18n.ts               dictionaries, detection and the useT hook

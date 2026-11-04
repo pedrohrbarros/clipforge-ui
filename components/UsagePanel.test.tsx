@@ -7,7 +7,11 @@ test("renders one progress bar per model with remaining uses", () => {
     <UsagePanel
       usage={{
         chat: { limit_requests: 1000, remaining_requests: 990, observed_at: 1 },
-        whisper: { limit_requests: 2000, remaining_requests: 500, observed_at: 1 },
+        whisper: {
+          limit_requests: 2000,
+          remaining_requests: 500,
+          observed_at: 1,
+        },
       }}
     />,
   );

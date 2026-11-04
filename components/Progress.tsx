@@ -15,7 +15,13 @@ export function ProgressFill({ progress }: { progress: number }) {
   );
 }
 
-export function ProgressSteps({ status, progress }: { status: JobStatus; progress: number }) {
+export function ProgressSteps({
+  status,
+  progress,
+}: {
+  status: JobStatus;
+  progress: number;
+}) {
   const t = useT();
   const current = STEPS.indexOf(status);
   return (
@@ -35,7 +41,9 @@ export function ProgressSteps({ status, progress }: { status: JobStatus; progres
           >
             {t(`steps.${step}`)}
             {state === "now" && (
-              <span className="ml-2 tabular-nums text-ember-deep">{progress}%</span>
+              <span className="ml-2 tabular-nums text-ember-deep">
+                {progress}%
+              </span>
             )}
           </li>
         );

@@ -9,8 +9,18 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
-  "errors.unauthorized": "The site's API key is missing or wrong. Check API_KEY on the frontend deploy.",
-  "errors.auth_unconfigured": "The server has no access key configured.",
+  "signin.title": "Sign in to make shorts",
+  "signin.body":
+    "ClipForge uses your Google account to keep a fair daily limit and to email you when your shorts are ready.",
+  "signin.unconfigured": "Google sign-in is not configured on this site.",
+  "me.left": "{n} of {limit} videos left today",
+  "me.signout": "Sign out",
+  "email.note":
+    "We will email {email} when it is done. You can close this page.",
+  "errors.daily_limit":
+    "You have used your videos for today. It resets at midnight UTC.",
+  "errors.unauthorized": "Your sign-in expired. Please sign in again.",
+  "errors.auth_unconfigured": "Google sign-in is not configured on the server.",
   "theme.toggle": "Switch between dark and light theme",
   "lang.label": "Language",
   "usage.title": "Uses left today",
@@ -21,7 +31,8 @@ const en: Dict = {
   "usage.checking": "Checking…",
   "usage.resets": "Resets in {time}",
   "usage.aria": "{label}, {pct}% of today's uses left",
-  waking: "Waking the server. The free tier sleeps when idle, this takes up to a minute.",
+  waking:
+    "Waking the server. The free tier sleeps when idle, this takes up to a minute.",
   "hero.title": "One long video in. Up to five shorts out.",
   "hero.body":
     "ClipForge listens to your video, finds the moments worth posting, and cuts them to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored; results disappear after an hour.",
@@ -52,7 +63,8 @@ const en: Dict = {
   "errors.no_speech": "No speech found in this video.",
   "errors.select_failed": "Could not pick moments, try again.",
   "errors.unreadable": "Could not read this video.",
-  "errors.transcript_too_long": "The transcript is too long for the free tier. Try a shorter video.",
+  "errors.transcript_too_long":
+    "The transcript is too long for the free tier. Try a shorter video.",
   "errors.ai_error": "The AI service returned an error, try again.",
   "errors.error": "Something went wrong, try again.",
   "errors.no_source": "Choose a video to upload.",
@@ -61,8 +73,19 @@ const en: Dict = {
 };
 
 const pt: Dict = {
-  "errors.unauthorized": "A chave de API do site está ausente ou errada. Verifique API_KEY no deploy do frontend.",
-  "errors.auth_unconfigured": "O servidor não tem chave de acesso configurada.",
+  "signin.title": "Entre para criar shorts",
+  "signin.body":
+    "O ClipForge usa sua conta Google para manter um limite diário justo e avisar por e-mail quando os shorts ficarem prontos.",
+  "signin.unconfigured": "O login com Google não está configurado neste site.",
+  "me.left": "{n} de {limit} vídeos restantes hoje",
+  "me.signout": "Sair",
+  "email.note":
+    "Vamos enviar um e-mail para {email} quando terminar. Você pode fechar esta página.",
+  "errors.daily_limit":
+    "Você já usou seus vídeos de hoje. Renova à meia-noite UTC.",
+  "errors.unauthorized": "Seu login expirou. Entre de novo.",
+  "errors.auth_unconfigured":
+    "O login com Google não está configurado no servidor.",
   "theme.toggle": "Alternar entre tema escuro e claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoje",
@@ -73,7 +96,8 @@ const pt: Dict = {
   "usage.checking": "Verificando…",
   "usage.resets": "Renova em {time}",
   "usage.aria": "{label}, {pct}% dos usos de hoje restantes",
-  waking: "Acordando o servidor. O plano gratuito dorme quando ocioso, isso leva até um minuto.",
+  waking:
+    "Acordando o servidor. O plano gratuito dorme quando ocioso, isso leva até um minuto.",
   "hero.title": "Um vídeo longo entra. Até cinco shorts saem.",
   "hero.body":
     "O ClipForge ouve o seu vídeo, encontra os momentos que valem um post e corta em 9:16 com legendas gravadas. Vídeos de até 10 minutos. Nada é armazenado; os resultados somem após uma hora.",
@@ -98,7 +122,8 @@ const pt: Dict = {
   "short.download": "Baixar",
   "errors.lostContact": "Perdemos contato com o servidor.",
   "errors.uploadFailed": "Falha no envio.",
-  "errors.quota": "A cota gratuita de IA acabou por enquanto. Tente mais tarde.",
+  "errors.quota":
+    "A cota gratuita de IA acabou por enquanto. Tente mais tarde.",
   "errors.auth": "A chave de IA do servidor está ausente ou inválida.",
   "errors.too_long": "Este vídeo é longo demais; o limite é de 10 minutos.",
   "errors.no_speech": "Nenhuma fala encontrada neste vídeo.",
@@ -114,8 +139,20 @@ const pt: Dict = {
 };
 
 const es: Dict = {
-  "errors.unauthorized": "La clave de API del sitio falta o es incorrecta. Revisa API_KEY en el despliegue del frontend.",
-  "errors.auth_unconfigured": "El servidor no tiene clave de acceso configurada.",
+  "signin.title": "Inicia sesión para crear shorts",
+  "signin.body":
+    "ClipForge usa tu cuenta de Google para mantener un límite diario justo y avisarte por correo cuando tus shorts estén listos.",
+  "signin.unconfigured":
+    "El inicio de sesión con Google no está configurado en este sitio.",
+  "me.left": "{n} de {limit} vídeos restantes hoy",
+  "me.signout": "Cerrar sesión",
+  "email.note":
+    "Te enviaremos un correo a {email} cuando termine. Puedes cerrar esta página.",
+  "errors.daily_limit":
+    "Ya usaste tus vídeos de hoy. Se renueva a medianoche UTC.",
+  "errors.unauthorized": "Tu sesión caducó. Inicia sesión de nuevo.",
+  "errors.auth_unconfigured":
+    "El inicio de sesión con Google no está configurado en el servidor.",
   "theme.toggle": "Cambiar entre tema oscuro y claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoy",
@@ -152,9 +189,11 @@ const es: Dict = {
   "short.download": "Descargar",
   "errors.lostContact": "Se perdió el contacto con el servidor.",
   "errors.uploadFailed": "La subida falló.",
-  "errors.quota": "La cuota gratuita de IA se agotó por ahora. Inténtalo más tarde.",
+  "errors.quota":
+    "La cuota gratuita de IA se agotó por ahora. Inténtalo más tarde.",
   "errors.auth": "Falta la clave de IA del servidor o no es válida.",
-  "errors.too_long": "Este vídeo es demasiado largo; el límite es de 10 minutos.",
+  "errors.too_long":
+    "Este vídeo es demasiado largo; el límite es de 10 minutos.",
   "errors.no_speech": "No se encontró voz en este vídeo.",
   "errors.select_failed": "No se pudieron elegir momentos, inténtalo de nuevo.",
   "errors.unreadable": "No se pudo leer este vídeo.",
@@ -176,7 +215,9 @@ export function detectLang(): Lang {
   } catch {
     // no storage
   }
-  const nav = (typeof navigator !== "undefined" ? navigator.language : "en").toLowerCase();
+  const nav = (
+    typeof navigator !== "undefined" ? navigator.language : "en"
+  ).toLowerCase();
   if (nav.startsWith("pt")) return "pt";
   if (nav.startsWith("es")) return "es";
   return "en";
@@ -216,17 +257,23 @@ export function useLang(): Lang {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
-export function translate(lang: Lang, key: string, vars?: Record<string, string | number>) {
+export function translate(
+  lang: Lang,
+  key: string,
+  vars?: Record<string, string | number>,
+) {
   let text = DICTS[lang][key] ?? en[key] ?? key;
   if (vars) {
-    for (const [k, v] of Object.entries(vars)) text = text.replaceAll(`{${k}}`, String(v));
+    for (const [k, v] of Object.entries(vars))
+      text = text.replaceAll(`{${k}}`, String(v));
   }
   return text;
 }
 
 export function useT() {
   const lang = useLang();
-  return (key: string, vars?: Record<string, string | number>) => translate(lang, key, vars);
+  return (key: string, vars?: Record<string, string | number>) =>
+    translate(lang, key, vars);
 }
 
 export class ApiError extends Error {
@@ -240,7 +287,8 @@ export class ApiError extends Error {
 /** Text for an API failure: the translated code when known, else the server's message. */
 export function errorText(lang: Lang, error: unknown, fallbackKey: string) {
   if (error instanceof ApiError) {
-    if (error.code && en[`errors.${error.code}`]) return translate(lang, `errors.${error.code}`);
+    if (error.code && en[`errors.${error.code}`])
+      return translate(lang, `errors.${error.code}`);
     if (error.message) return error.message;
   }
   // Network failures and the like carry browser-language text; use our own instead.
@@ -249,5 +297,7 @@ export function errorText(lang: Lang, error: unknown, fallbackKey: string) {
 
 /** Text for a failed job: translated by its code, falling back to the server's message. */
 export function jobErrorText(lang: Lang, code: string, message: string) {
-  return code && en[`errors.${code}`] ? translate(lang, `errors.${code}`) : message;
+  return code && en[`errors.${code}`]
+    ? translate(lang, `errors.${code}`)
+    : message;
 }

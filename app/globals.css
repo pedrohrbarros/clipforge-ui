@@ -63,13 +63,25 @@ body {
   background: var(--color-panel);
 }
 
+/* Result cards: sized by the available width instead of the viewport height. */
+.phone-fluid {
+  width: 100%;
+  height: auto;
+}
+
 .ember-fill {
   background: linear-gradient(180deg, var(--color-ember) 0%, var(--color-ember-deep) 100%);
   transition: height 600ms ease-out, width 400ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ember-fill {
+  /* Result cards: sized by the available width instead of the viewport height. */
+.phone-fluid {
+  width: 100%;
+  height: auto;
+}
+
+.ember-fill {
     transition: none;
   }
 }

@@ -16,7 +16,10 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
   const t = useT();
   const input = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
-  const preview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
+  const preview = useMemo(
+    () => (file ? URL.createObjectURL(file) : null),
+    [file],
+  );
 
   useEffect(
     () => () => {
@@ -42,7 +45,9 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
     <div
       role="button"
       tabIndex={disabled ? -1 : 0}
-      aria-label={file ? t("drop.selected", { name: file.name }) : t("drop.choose")}
+      aria-label={
+        file ? t("drop.selected", { name: file.name }) : t("drop.choose")
+      }
       onClick={() => !disabled && input.current?.click()}
       onKeyDown={(e) => {
         if (!disabled && (e.key === "Enter" || e.key === " ")) {
@@ -75,11 +80,18 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
         onChange={(e) => accept(e.target.files?.[0])}
       />
       {preview ? (
-        <video src={preview} muted playsInline className="h-full w-full object-cover" />
+        <video
+          src={preview}
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        />
       ) : (
         <p className="px-8 font-display text-xl leading-snug text-ink">
           {t("drop.title")}
-          <span className="mt-2 block font-body text-sm text-steel">{t("drop.sub")}</span>
+          <span className="mt-2 block font-body text-sm text-steel">
+            {t("drop.sub")}
+          </span>
         </p>
       )}
     </div>

@@ -24,7 +24,9 @@ function Meter({ label, quota }: { label: string; quota: Quota | null }) {
     <div>
       <div className="flex justify-between gap-4">
         <span className="whitespace-nowrap">{label}</span>
-        <span className={`whitespace-nowrap tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}>
+        <span
+          className={`whitespace-nowrap tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}
+        >
           {t("usage.left", {
             remaining: remaining.toLocaleString(),
             limit: limit.toLocaleString(),
