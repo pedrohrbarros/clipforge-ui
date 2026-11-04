@@ -9,6 +9,8 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
+  "errors.unauthorized": "The site's API key is missing or wrong. Check API_KEY on the frontend deploy.",
+  "errors.auth_unconfigured": "The server has no access key configured.",
   "theme.toggle": "Switch between dark and light theme",
   "lang.label": "Language",
   "usage.title": "Uses left today",
@@ -68,6 +70,8 @@ const en: Dict = {
 };
 
 const pt: Dict = {
+  "errors.unauthorized": "A chave de API do site está ausente ou errada. Verifique API_KEY no deploy do frontend.",
+  "errors.auth_unconfigured": "O servidor não tem chave de acesso configurada.",
   "theme.toggle": "Alternar entre tema escuro e claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoje",
@@ -128,6 +132,8 @@ const pt: Dict = {
 };
 
 const es: Dict = {
+  "errors.unauthorized": "La clave de API del sitio falta o es incorrecta. Revisa API_KEY en el despliegue del frontend.",
+  "errors.auth_unconfigured": "El servidor no tiene clave de acceso configurada.",
   "theme.toggle": "Cambiar entre tema oscuro y claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoy",

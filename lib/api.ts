@@ -1,6 +1,8 @@
 import { ApiError } from "@/lib/i18n";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Shared secret the API expects; inlined at build time via next.config.ts `env`.
+const API_KEY = process.env.API_KEY ?? "";
 
 export type Quota = {
   limit_requests?: number | null;
@@ -61,8 +63,15 @@ export async function checkHealth(timeoutMs = 3000): Promise<boolean> {
   }
 }
 
+function auth(extra: HeadersInit = {}): HeadersInit {
+  return { Authorization: `Bearer ${API_KEY}`, ...extra };
+}
+
+// <video> tags and download links cannot send headers, so media URLs carry the key as ?token=.
+const withToken = (path: string) => `${API_URL}${path}?token=${encodeURIComponent(API_KEY)}`;
+
 export async function getUsage(): Promise<Usage> {
-  const res = await fetch(`${API_URL}/usage`);
+  const res = await fetch(`${API_URL}/usage`, { headers: auth() });
   if (!res.ok) throw await readError(res);
   return res.json();
 }
@@ -75,19 +84,19 @@ export async function createJob(
   if ("file" in source) form.append("video", source.file);
   else form.append("url", source.url);
   form.append("captions", String(captions));
-  const res = await fetch(`${API_URL}/jobs`, { method: "POST", body: form });
+  const res = await fetch(`${API_URL}/jobs`, { method: "POST", body: form, headers: auth() });
   if (!res.ok) throw await readError(res);
   const { id } = await res.json();
   return id;
 }
 
 export async function getJob(id: string): Promise<Job> {
-  const res = await fetch(`${API_URL}/jobs/${id}`);
+  const res = await fetch(`${API_URL}/jobs/${id}`, { headers: auth() });
   if (!res.ok) throw await readError(res);
   return res.json();
 }
 
 export const shortUrl = (id: string, index: number, download = false) =>
-  `${API_URL}/jobs/${id}/shorts/${index}${download ? "?download=1" : ""}`;
+  withToken(`/jobs/${id}/shorts/${index}`) + (download ? "&download=1" : "");
 
-export const zipUrl = (id: string) => `${API_URL}/jobs/${id}/zip`;
+export const zipUrl = (id: string) => withToken(`/jobs/${id}/zip`);

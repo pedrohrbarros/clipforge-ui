@@ -27,13 +27,22 @@ case the job fails with a message suggesting an upload instead.
 
 ```bash
 npm install
-cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:8000
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL and API_KEY
 npm run dev                  # http://localhost:3000
 ```
 
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the ClipForge API, no trailing slash |
+| `API_KEY` | Same value as the API's `AUTHORIZATION_KEY` |
+
+## API key
+
+The API requires a shared secret, `AUTHORIZATION_KEY` on the server. The frontend reads the
+same value from `API_KEY`, sends it as `Authorization: Bearer` on every request, and appends
+it as `?token=` to the video and zip URLs the browser loads directly. `next.config.ts` inlines
+`API_KEY` into the browser bundle at build time, so it is visible to anyone using the site;
+that is inherent to a browser that calls the API directly. Changing it needs a rebuild.
 
 ## Languages
 
@@ -59,8 +68,8 @@ npm test        # vitest (UsagePanel rendering)
 ## Deploy on Vercel
 
 1. Push this repo to GitHub and import it in Vercel. The defaults for Next.js are fine.
-2. Add the environment variable `NEXT_PUBLIC_API_URL` with the Render URL of the API,
-   for example `https://clipforge.onrender.com`.
+2. Add the environment variables `NEXT_PUBLIC_API_URL` (the Render URL of the API, for
+   example `https://clipforge.onrender.com`) and `API_KEY` (the API's `AUTHORIZATION_KEY`).
 3. On the Render service set `ALLOWED_ORIGINS` to your Vercel URL so CORS allows the
    browser to call the API directly. Uploads go straight from the browser to Render, so
    Vercel's function limits never apply.
