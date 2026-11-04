@@ -15,7 +15,14 @@ export type Quota = {
 
 export type Usage = { chat: Quota | null; whisper: Quota | null };
 
-export type JobStatus = "queued" | "transcribing" | "selecting" | "rendering" | "done" | "failed";
+export type JobStatus =
+  | "queued"
+  | "downloading"
+  | "transcribing"
+  | "selecting"
+  | "rendering"
+  | "done"
+  | "failed";
 
 export type Short = { index: number; title: string; start: number; end: number; duration: number };
 
@@ -55,9 +62,13 @@ export async function getUsage(): Promise<Usage> {
   return res.json();
 }
 
-export async function createJob(file: File, captions: boolean): Promise<string> {
+export async function createJob(
+  source: { file: File } | { url: string },
+  captions: boolean,
+): Promise<string> {
   const form = new FormData();
-  form.append("video", file);
+  if ("file" in source) form.append("video", source.file);
+  else form.append("url", source.url);
   form.append("captions", String(captions));
   const res = await fetch(`${API_URL}/jobs`, { method: "POST", body: form });
   if (!res.ok) throw new Error(await readError(res));
@@ -75,44 +86,3 @@ export const shortUrl = (id: string, index: number, download = false) =>
   `${API_URL}/jobs/${id}/shorts/${index}${download ? "?download=1" : ""}`;
 
 export const zipUrl = (id: string) => `${API_URL}/jobs/${id}/zip`;
-
-export type YoutubeOption = { id: string; label: string };
-
-export type YoutubeInfo = {
-  title: string;
-  duration: number | null;
-  thumbnail: string | null;
-  options: YoutubeOption[];
-};
-
-export type Download = {
-  id: string;
-  status: "queued" | "downloading" | "done" | "failed";
-  progress: number;
-  message: string;
-  title: string;
-  filename: string | null;
-};
-
-async function postJson<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(await readError(res));
-  return res.json();
-}
-
-export const getYoutubeInfo = (url: string) => postJson<YoutubeInfo>("/youtube/info", { url });
-
-export const startYoutubeDownload = (url: string, option: string) =>
-  postJson<{ id: string }>("/youtube/download", { url, option }).then((r) => r.id);
-
-export async function getDownload(id: string): Promise<Download> {
-  const res = await fetch(`${API_URL}/youtube/${id}`);
-  if (!res.ok) throw new Error(await readError(res));
-  return res.json();
-}
-
-export const downloadFileUrl = (id: string) => `${API_URL}/youtube/${id}/file`;

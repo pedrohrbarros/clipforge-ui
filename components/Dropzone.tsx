@@ -77,7 +77,9 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
       ) : (
         <p className="px-8 font-display text-xl leading-snug text-ink">
           Drop a video here
-          <span className="mt-2 block font-body text-sm text-steel">or click to choose one</span>
+          <span className="mt-2 block font-body text-sm text-steel">
+            click to choose one, or paste a YouTube link
+          </span>
         </p>
       )}
     </div>

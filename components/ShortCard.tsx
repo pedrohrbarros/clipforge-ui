@@ -2,7 +2,7 @@ import { shortUrl, type Short } from "@/lib/api";
 
 export function ShortCard({ jobId, short }: { jobId: string; short: Short }) {
   return (
-    <figure className="w-[200px] shrink-0">
+    <figure className="shrink-0">
       <div className="phone overflow-hidden border-ink bg-ink">
         <video
           src={shortUrl(jobId, short.index)}
