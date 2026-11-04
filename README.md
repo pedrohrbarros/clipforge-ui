@@ -13,6 +13,9 @@ TypeScript and Tailwind, deployed on Vercel.
    `GET /jobs/{id}` every two seconds. Progress fills the frame from the bottom.
 4. When the job is done, each short appears as a playable 9:16 card with a download
    link, plus "Download all" for a zip. Results expire on the server after an hour.
+5. Below that, "Download a YouTube video": paste a link, "Check video" lists the available
+   qualities in a dropdown, "Download" fetches it on the server with progress, and "Save
+   file" hands you the file. YouTube may block hosted servers; it works from a laptop.
 
 ## Requirements
 
@@ -59,7 +62,8 @@ app/icon.svg              favicon
 components/Dropzone.tsx   drag and drop plus file preview
 components/Progress.tsx   ember fill and step list
 components/ShortCard.tsx  playable result with download link
-components/UsagePanel.tsx remaining Groq quota per model
+components/UsagePanel.tsx remaining uses per model as progress bars
+components/YoutubeDownloader.tsx  link check, quality dropdown, download progress
 components/Logo.tsx       the logo mark (also in public/logo.svg)
 lib/api.ts                typed calls to the API
 ```

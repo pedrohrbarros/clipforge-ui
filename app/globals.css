@@ -30,7 +30,7 @@ body {
 
 .ember-fill {
   background: linear-gradient(180deg, var(--color-ember) 0%, var(--color-ember-deep) 100%);
-  transition: height 600ms ease-out;
+  transition: height 600ms ease-out, width 400ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -62,4 +62,21 @@ body {
 .btn:focus-visible {
   outline: 3px solid var(--color-ember);
   outline-offset: 3px;
+}
+
+.field {
+  border: 2px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-panel);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}
+.field:focus-visible {
+  outline: 3px solid var(--color-ember);
+  outline-offset: 2px;
+  border-color: var(--color-ink);
+}
+.field:disabled {
+  color: var(--color-steel);
 }

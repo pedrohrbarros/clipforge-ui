@@ -6,6 +6,7 @@ import { LogoMark } from "@/components/Logo";
 import { ProgressFill, ProgressSteps } from "@/components/Progress";
 import { ShortCard } from "@/components/ShortCard";
 import { UsagePanel } from "@/components/UsagePanel";
+import { YoutubeDownloader } from "@/components/YoutubeDownloader";
 import { checkHealth, createJob, getJob, getUsage, zipUrl, type Job, type Usage } from "@/lib/api";
 
 type Phase = "idle" | "uploading" | "processing" | "done" | "failed";
@@ -186,6 +187,8 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <YoutubeDownloader />
     </main>
   );
 }
