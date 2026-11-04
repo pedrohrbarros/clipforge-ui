@@ -3,7 +3,7 @@
 import type { JobStatus } from "@/lib/api";
 import { useT } from "@/lib/i18n";
 
-const STEPS: JobStatus[] = ["downloading", "transcribing", "selecting", "rendering"];
+const STEPS: JobStatus[] = ["transcribing", "selecting", "rendering"];
 
 export function ProgressFill({ progress }: { progress: number }) {
   return (
@@ -15,21 +15,12 @@ export function ProgressFill({ progress }: { progress: number }) {
   );
 }
 
-export function ProgressSteps({
-  status,
-  progress,
-  fromYoutube,
-}: {
-  status: JobStatus;
-  progress: number;
-  fromYoutube: boolean;
-}) {
+export function ProgressSteps({ status, progress }: { status: JobStatus; progress: number }) {
   const t = useT();
-  const steps = fromYoutube ? STEPS : STEPS.filter((s) => s !== "downloading");
-  const current = steps.indexOf(status);
+  const current = STEPS.indexOf(status);
   return (
     <ol className="space-y-1 text-sm leading-6" aria-live="polite">
-      {steps.map((step, i) => {
+      {STEPS.map((step, i) => {
         const state = i < current ? "done" : i === current ? "now" : "next";
         return (
           <li

@@ -21,7 +21,6 @@ export type Usage = { chat: Quota | null; whisper: Quota | null };
 
 export type JobStatus =
   | "queued"
-  | "downloading"
   | "transcribing"
   | "selecting"
   | "rendering"
@@ -76,13 +75,9 @@ export async function getUsage(): Promise<Usage> {
   return res.json();
 }
 
-export async function createJob(
-  source: { file: File } | { url: string },
-  captions: boolean,
-): Promise<string> {
+export async function createJob(file: File, captions: boolean): Promise<string> {
   const form = new FormData();
-  if ("file" in source) form.append("video", source.file);
-  else form.append("url", source.url);
+  form.append("video", file);
   form.append("captions", String(captions));
   const res = await fetch(`${API_URL}/jobs`, { method: "POST", body: form, headers: auth() });
   if (!res.ok) throw await readError(res);

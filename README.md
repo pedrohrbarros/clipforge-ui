@@ -9,14 +9,12 @@ TypeScript and Tailwind, deployed on Vercel.
 1. Pings the API on load. If the Render free instance is asleep it shows "Waking the
    server" until it answers, then loads the quota panel from `GET /usage`.
 2. You drop or choose a video (under 500 MB and 10 minutes), which previews inside the
-   phone-shaped frame, or paste a YouTube link instead. A link wins over a chosen file.
+   phone-shaped frame.
 3. "Make shorts" uploads it to `POST /jobs` with the captions flag, then polls
    `GET /jobs/{id}` every two seconds. Progress fills the frame from the bottom.
 4. When the job is done, each short appears as a playable 9:16 card with a download
    link, plus "Download all" for a zip. Results expire on the server after an hour.
 
-YouTube links are fetched on the server; YouTube sometimes blocks hosted servers, in which
-case the job fails with a message suggesting an upload instead.
 
 ## Requirements
 
@@ -81,7 +79,7 @@ app/page.tsx              the single page and its state machine
 app/layout.tsx            fonts (Bricolage Grotesque, Instrument Sans) and metadata
 app/globals.css           design tokens, the .phone frame, buttons
 app/icon.svg              favicon
-components/Dropzone.tsx   drag and drop plus file preview (the link field lives in page.tsx)
+components/Dropzone.tsx   drag and drop plus file preview
 components/Progress.tsx   ember fill and step list
 components/ShortCard.tsx  playable result with download link
 components/UsagePanel.tsx remaining uses per model as progress bars

@@ -17,7 +17,6 @@ export default function Home() {
   const t = useT();
   const lang = useLang();
   const [file, setFile] = useState<File | null>(null);
-  const [url, setUrl] = useState("");
   const [captions, setCaptions] = useState(true);
   const [phase, setPhase] = useState<Phase>("idle");
   const [job, setJob] = useState<Job | null>(null);
@@ -58,16 +57,13 @@ export default function Home() {
     [],
   );
 
-  const link = url.trim();
-  const fromYoutube = link.length > 0;
-
   async function generate() {
-    if (!file && !fromYoutube) return;
+    if (!file) return;
     setError(null);
     setJob(null);
     setPhase("uploading");
     try {
-      const id = await createJob(fromYoutube ? { url: link } : { file: file! }, captions);
+      const id = await createJob(file, captions);
       setPhase("processing");
       poll.current = setInterval(async () => {
         try {
@@ -93,7 +89,6 @@ export default function Home() {
 
   function reset() {
     setFile(null);
-    setUrl("");
     setJob(null);
     setError(null);
     setPhase("idle");
@@ -175,27 +170,6 @@ export default function Home() {
                 </h1>
                 <p className="mt-3 text-sm leading-6 text-steel">{t("hero.body")}</p>
 
-                <label className="mt-6 block text-sm">
-                  <span className="text-steel">{t("link.label")}</span>
-                  <input
-                    type="url"
-                    inputMode="url"
-                    value={url}
-                    onChange={(e) => {
-                      setUrl(e.target.value);
-                      setError(null);
-                    }}
-                    placeholder={t("link.placeholder")}
-                    disabled={busy}
-                    className="field mt-1.5 block w-full"
-                  />
-                  {fromYoutube && file && (
-                    <span className="mt-1 block text-xs text-steel">
-                      {t("link.override", { name: file.name })}
-                    </span>
-                  )}
-                </label>
-
                 <label className="mt-6 flex items-center gap-3 text-sm">
                   <input
                     type="checkbox"
@@ -211,7 +185,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={generate}
-                    disabled={(!file && !fromYoutube) || busy}
+                    disabled={!file || busy}
                     className="btn"
                   >
                     {phase === "uploading"
@@ -220,7 +194,7 @@ export default function Home() {
                         ? t("btn.forging")
                         : t("btn.make")}
                   </button>
-                  {file && !busy && !fromYoutube && (
+                  {file && !busy && (
                     <span className="truncate text-sm text-steel">
                       {file.name} · {(file.size / 1024 / 1024).toFixed(1)} MB
                     </span>
@@ -229,17 +203,11 @@ export default function Home() {
 
                 {busy && job && (
                   <div className="mt-6">
-                    <ProgressSteps
-                      status={job.status}
-                      progress={job.progress}
-                      fromYoutube={fromYoutube}
-                    />
+                    <ProgressSteps status={job.status} progress={job.progress} />
                   </div>
                 )}
                 {phase === "uploading" && (
-                  <p className="mt-6 text-sm text-steel">
-                    {fromYoutube ? t("starting") : t("sending")}
-                  </p>
+                  <p className="mt-6 text-sm text-steel">{t("sending")}</p>
                 )}
                 {error && (
                   <p
