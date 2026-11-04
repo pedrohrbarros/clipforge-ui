@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useT } from "@/lib/i18n";
 
 export const MAX_MB = 500;
 
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export function Dropzone({ file, onFile, onError, disabled }: Props) {
+  const t = useT();
   const input = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   const preview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
@@ -26,11 +28,11 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
   function accept(candidate: File | undefined) {
     if (!candidate) return;
     if (!candidate.type.startsWith("video/")) {
-      onError("That is not a video file.");
+      onError(t("drop.notVideo"));
       return;
     }
     if (candidate.size > MAX_MB * 1024 * 1024) {
-      onError(`Videos must be under ${MAX_MB} MB.`);
+      onError(t("drop.tooBig", { mb: MAX_MB }));
       return;
     }
     onFile(candidate);
@@ -40,7 +42,7 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
     <div
       role="button"
       tabIndex={disabled ? -1 : 0}
-      aria-label={file ? `Selected ${file.name}. Choose a different video` : "Choose a video"}
+      aria-label={file ? t("drop.selected", { name: file.name }) : t("drop.choose")}
       onClick={() => !disabled && input.current?.click()}
       onKeyDown={(e) => {
         if (!disabled && (e.key === "Enter" || e.key === " ")) {
@@ -76,10 +78,8 @@ export function Dropzone({ file, onFile, onError, disabled }: Props) {
         <video src={preview} muted playsInline className="h-full w-full object-cover" />
       ) : (
         <p className="px-8 font-display text-xl leading-snug text-ink">
-          Drop a video here
-          <span className="mt-2 block font-body text-sm text-steel">
-            click to choose one, or paste a YouTube link
-          </span>
+          {t("drop.title")}
+          <span className="mt-2 block font-body text-sm text-steel">{t("drop.sub")}</span>
         </p>
       )}
     </div>

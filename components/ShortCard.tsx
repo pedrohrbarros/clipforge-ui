@@ -1,6 +1,10 @@
+"use client";
+
 import { shortUrl, type Short } from "@/lib/api";
+import { useT } from "@/lib/i18n";
 
 export function ShortCard({ jobId, short }: { jobId: string; short: Short }) {
+  const t = useT();
   return (
     <figure className="shrink-0">
       <div className="phone overflow-hidden border-ink bg-ink">
@@ -19,7 +23,7 @@ export function ShortCard({ jobId, short }: { jobId: string; short: Short }) {
           href={shortUrl(jobId, short.index, true)}
           className="mt-2 inline-block text-sm text-ink underline underline-offset-4 hover:text-ember-deep"
         >
-          Download
+          {t("short.download")}
         </a>
       </figcaption>
     </figure>

@@ -1,14 +1,18 @@
+"use client";
+
 import type { Quota, Usage } from "@/lib/api";
+import { useT } from "@/lib/i18n";
 
 function Meter({ label, quota }: { label: string; quota: Quota | null }) {
+  const t = useT();
   const limit = quota?.limit_requests ?? null;
   const remaining = quota?.remaining_requests ?? null;
   if (limit == null || remaining == null) {
     return (
       <div>
         <div className="flex justify-between gap-4">
-          <span>{label}</span>
-          <span className="text-steel">not available</span>
+          <span className="whitespace-nowrap">{label}</span>
+          <span className="text-steel">{t("usage.na")}</span>
         </div>
         <div className="mt-1.5 h-1.5 rounded-full bg-line" />
       </div>
@@ -19,14 +23,17 @@ function Meter({ label, quota }: { label: string; quota: Quota | null }) {
   return (
     <div>
       <div className="flex justify-between gap-4">
-        <span>{label}</span>
-        <span className={`tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}>
-          {remaining.toLocaleString()} of {limit.toLocaleString()} left
+        <span className="whitespace-nowrap">{label}</span>
+        <span className={`whitespace-nowrap tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}>
+          {t("usage.left", {
+            remaining: remaining.toLocaleString(),
+            limit: limit.toLocaleString(),
+          })}
         </span>
       </div>
       <div
         role="progressbar"
-        aria-label={`${label}, ${pct}% of today's uses left`}
+        aria-label={t("usage.aria", { label, pct })}
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
@@ -38,27 +45,30 @@ function Meter({ label, quota }: { label: string; quota: Quota | null }) {
         />
       </div>
       {remaining === 0 && quota?.reset_requests && (
-        <p className="mt-1 text-xs text-ember-deep">Resets in {quota.reset_requests}</p>
+        <p className="mt-1 text-xs text-ember-deep">
+          {t("usage.resets", { time: quota.reset_requests })}
+        </p>
       )}
     </div>
   );
 }
 
 export function UsagePanel({ usage }: { usage: Usage | null }) {
+  const t = useT();
   return (
-    <section aria-label="Uses left today" className="text-sm leading-6">
-      <p className="font-display text-ink">Uses left today</p>
+    <section aria-label={t("usage.title")} className="text-sm leading-6">
+      <p className="font-display text-ink">{t("usage.title")}</p>
       {usage ? (
         <div className="mt-2 flex flex-wrap gap-x-8 gap-y-3">
-          <div className="w-64">
-            <Meter label="Picking moments" quota={usage.chat} />
+          <div className="w-72">
+            <Meter label={t("usage.chat")} quota={usage.chat} />
           </div>
-          <div className="w-64">
-            <Meter label="Transcribing" quota={usage.whisper} />
+          <div className="w-72">
+            <Meter label={t("usage.whisper")} quota={usage.whisper} />
           </div>
         </div>
       ) : (
-        <p className="text-steel">Checking…</p>
+        <p className="text-steel">{t("usage.checking")}</p>
       )}
     </section>
   );

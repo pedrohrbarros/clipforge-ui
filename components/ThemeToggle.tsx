@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n";
+
 export const THEME_KEY = "clipforge-theme";
 
 function toggle() {
@@ -15,13 +17,14 @@ function toggle() {
 }
 
 export function ThemeToggle() {
+  const t = useT();
   return (
     <button
       type="button"
       onClick={toggle}
-      aria-label="Switch between dark and light theme"
-      title="Switch theme"
-      className="theme-toggle inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-line text-ink hover:border-ink focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-ember"
+      aria-label={t("theme.toggle")}
+      title={t("theme.toggle")}
+      className="theme-toggle inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-line text-ink hover:border-ink focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-ember"
     >
       <svg className="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />

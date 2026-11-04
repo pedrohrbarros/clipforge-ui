@@ -1,3 +1,5 @@
+import { ApiError } from "@/lib/i18n";
+
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export type Quota = {
@@ -31,15 +33,18 @@ export type Job = {
   status: JobStatus;
   progress: number;
   message: string;
+  code: string;
   shorts: Short[];
 };
 
-async function readError(res: Response): Promise<string> {
+async function readError(res: Response): Promise<ApiError> {
   try {
     const body = await res.json();
-    return typeof body.detail === "string" ? body.detail : res.statusText;
+    const detail = body.detail;
+    if (detail && typeof detail === "object") return new ApiError(detail.message, detail.code);
+    return new ApiError(typeof detail === "string" ? detail : res.statusText, null);
   } catch {
-    return res.statusText;
+    return new ApiError(res.statusText, null);
   }
 }
 
@@ -58,7 +63,7 @@ export async function checkHealth(timeoutMs = 3000): Promise<boolean> {
 
 export async function getUsage(): Promise<Usage> {
   const res = await fetch(`${API_URL}/usage`);
-  if (!res.ok) throw new Error(await readError(res));
+  if (!res.ok) throw await readError(res);
   return res.json();
 }
 
@@ -71,14 +76,14 @@ export async function createJob(
   else form.append("url", source.url);
   form.append("captions", String(captions));
   const res = await fetch(`${API_URL}/jobs`, { method: "POST", body: form });
-  if (!res.ok) throw new Error(await readError(res));
+  if (!res.ok) throw await readError(res);
   const { id } = await res.json();
   return id;
 }
 
 export async function getJob(id: string): Promise<Job> {
   const res = await fetch(`${API_URL}/jobs/${id}`);
-  if (!res.ok) throw new Error(await readError(res));
+  if (!res.ok) throw await readError(res);
   return res.json();
 }
 

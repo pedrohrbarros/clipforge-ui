@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 // Runs before paint so a saved light theme never flashes dark. Dark needs no attribute.
-const themeScript = `try{if(localStorage.getItem("clipforge-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
+const themeScript = `try{var d=document.documentElement;if(localStorage.getItem("clipforge-theme")==="light")d.dataset.theme="light";var l=localStorage.getItem("clipforge-lang")||(navigator.language||"en").slice(0,2);d.lang=["pt","es"].includes(l)?l:"en"}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

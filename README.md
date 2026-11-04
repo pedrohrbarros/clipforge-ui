@@ -35,6 +35,13 @@ npm run dev                  # http://localhost:3000
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the ClipForge API, no trailing slash |
 
+## Languages
+
+English, Portuguese and Spanish, in `lib/i18n.ts`. The page follows the browser language
+on first visit; the selector next to the theme toggle overrides it and the choice is kept in
+`localStorage`. Server failures carry a `code` that the UI translates, with the server's
+English message as fallback.
+
 ## Theme
 
 Dark by default. The toggle in the header switches to light and remembers the choice in
@@ -70,5 +77,8 @@ components/Progress.tsx   ember fill and step list
 components/ShortCard.tsx  playable result with download link
 components/UsagePanel.tsx remaining uses per model as progress bars
 components/Logo.tsx       the logo mark (also in public/logo.svg)
+components/LanguageSelect.tsx  language dropdown
+components/ThemeToggle.tsx     dark/light switch
+lib/i18n.ts               dictionaries, detection and the useT hook
 lib/api.ts                typed calls to the API
 ```

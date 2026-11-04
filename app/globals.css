@@ -125,3 +125,21 @@ body {
   background: var(--color-panel);
   color: var(--color-ink);
 }
+
+.lang-select {
+  height: 2.25rem;
+  border: 2px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-panel);
+  color: var(--color-ink);
+  padding: 0 0.9rem;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+.lang-select:hover {
+  border-color: var(--color-ink);
+}
+.lang-select:focus-visible {
+  outline: 3px solid var(--color-ember);
+  outline-offset: 2px;
+}
