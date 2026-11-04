@@ -113,7 +113,10 @@ export default function Home() {
       )}
 
       <div className="mt-8 flex min-h-0 flex-1 flex-col">
-        <section className="flex min-h-0 flex-col" aria-label="Make shorts">
+        <section
+          className="flex min-h-0 flex-1 flex-col justify-center"
+          aria-label="Make shorts"
+        >
           {phase === "done" && job ? (
             <>
               <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -136,7 +139,7 @@ export default function Home() {
               </div>
             </>
           ) : (
-            <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
+            <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-center sm:gap-12">
               <div className="relative shrink-0">
                 <Dropzone
                   file={file}
@@ -154,11 +157,11 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="min-w-0 flex-1">
+              <div className="w-full min-w-0 max-w-xl">
                 <h1 className="font-display text-3xl font-bold leading-[1.1] tracking-tight">
                   One long video in. Up to five shorts out.
                 </h1>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-steel">
+                <p className="mt-3 text-sm leading-6 text-steel">
                   ClipForge listens to your video, finds the moments worth posting, and cuts them
                   to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored;
                   results disappear after an hour.
@@ -176,7 +179,7 @@ export default function Home() {
                     }}
                     placeholder="https://www.youtube.com/watch?v=…"
                     disabled={busy}
-                    className="field mt-1.5 block w-full max-w-2xl"
+                    className="field mt-1.5 block w-full"
                   />
                   {fromYoutube && file && (
                     <span className="mt-1 block text-xs text-steel">

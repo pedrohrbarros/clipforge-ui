@@ -46,12 +46,16 @@ function Meter({ label, quota }: { label: string; quota: Quota | null }) {
 
 export function UsagePanel({ usage }: { usage: Usage | null }) {
   return (
-    <section aria-label="Uses left today" className="w-full max-w-xs text-sm leading-6">
+    <section aria-label="Uses left today" className="text-sm leading-6">
       <p className="font-display text-ink">Uses left today</p>
       {usage ? (
-        <div className="mt-2 space-y-3">
-          <Meter label="Picking moments" quota={usage.chat} />
-          <Meter label="Transcribing" quota={usage.whisper} />
+        <div className="mt-2 flex flex-wrap gap-x-8 gap-y-3">
+          <div className="w-64">
+            <Meter label="Picking moments" quota={usage.chat} />
+          </div>
+          <div className="w-64">
+            <Meter label="Transcribing" quota={usage.whisper} />
+          </div>
         </div>
       ) : (
         <p className="text-steel">Checking…</p>
