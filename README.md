@@ -25,19 +25,19 @@ TypeScript and Tailwind, deployed on Vercel.
 
 ```bash
 npm install
-cp .env.example .env.local   # set NEXT_PUBLIC_API_URL and NEXT_PUBLIC_GOOGLE_CLIENT_ID
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL and GOOGLE_CLIENT_ID
 npm run dev                  # http://localhost:3000
 ```
 
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the ClipForge API, no trailing slash |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google OAuth web client id, the same one the API verifies |
+| `GOOGLE_CLIENT_ID` | Google OAuth web client id, the same one the API verifies. No client secret is needed; `next.config.ts` exposes it to the browser |
 
 ## Sign-in
 
 Google only. `components/SignIn.tsx` renders Google's button through `@react-oauth/google`
-with `NEXT_PUBLIC_GOOGLE_CLIENT_ID`; the returned ID token is kept in `sessionStorage`
+with `GOOGLE_CLIENT_ID` (exposed to the browser by `next.config.ts`); the returned ID token is kept in `sessionStorage`
 (`lib/auth.ts`) and sent as `Authorization: Bearer` on every API call. A 401 clears it and
 shows the sign-in screen again. The header shows the user's picture, name and how many of
 their daily videos are left, and a Sign out button.
@@ -70,7 +70,7 @@ npm test        # vitest (UsagePanel rendering)
 
 1. Push this repo to GitHub and import it in Vercel. The defaults for Next.js are fine.
 2. Add the environment variables `NEXT_PUBLIC_API_URL` (the Render URL of the API, for
-   example `https://clipforge.onrender.com`) and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
+   example `https://clipforge.onrender.com`) and `GOOGLE_CLIENT_ID`.
 3. On the Render service set `ALLOWED_ORIGINS` to your Vercel URL so CORS allows the
    browser to call the API directly. Uploads go straight from the browser to Render, so
    Vercel's function limits never apply.
