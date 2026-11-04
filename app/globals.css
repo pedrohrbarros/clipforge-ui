@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #e9ecf0;
+  --color-panel: #f7f8fa;
+  --color-ink: #141821;
+  --color-steel: #6b7380;
+  --color-line: #d3d8df;
+  --color-ember: #f2542d;
+  --color-ember-deep: #b8321a;
+  --font-display: var(--font-display), "Bricolage Grotesque", sans-serif;
+  --font-body: var(--font-body), "Instrument Sans", sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* The 9:16 frame: drop zone, progress vessel and result preview share it. */
+.phone {
+  aspect-ratio: 9 / 16;
+  width: 240px;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 28px;
+  background: var(--color-panel);
+}
+
+.ember-fill {
+  background: linear-gradient(180deg, var(--color-ember) 0%, var(--color-ember-deep) 100%);
+  transition: height 600ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-fill {
+    transition: none;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-panel);
+  padding: 0.7rem 1.4rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: background-color 150ms ease;
+}
+.btn:hover:not(:disabled) {
+  background: var(--color-ember-deep);
+}
+.btn:disabled {
+  background: var(--color-line);
+  color: var(--color-steel);
+  cursor: not-allowed;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--color-ember);
+  outline-offset: 3px;
+}
