@@ -5,6 +5,7 @@ import { Dropzone } from "@/components/Dropzone";
 import { LogoMark } from "@/components/Logo";
 import { ProgressFill, ProgressSteps } from "@/components/Progress";
 import { ShortCard } from "@/components/ShortCard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { UsagePanel } from "@/components/UsagePanel";
 import { checkHealth, createJob, getJob, getUsage, zipUrl, type Job, type Usage } from "@/lib/api";
 
@@ -93,13 +94,16 @@ export default function Home() {
   const progress = phase === "uploading" ? 2 : (job?.progress ?? 0);
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-8 lg:h-dvh lg:overflow-hidden">
+    <main className="flex w-full flex-col px-4 py-6 sm:px-8 lg:h-dvh lg:overflow-hidden">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-center gap-3">
           <LogoMark className="h-10 w-auto text-ink" />
           <span className="font-display text-2xl font-bold tracking-tight">ClipForge</span>
         </div>
-        <UsagePanel usage={usage} />
+        <div className="flex items-start gap-6">
+          <UsagePanel usage={usage} />
+          <ThemeToggle />
+        </div>
       </header>
 
       {waking && (
@@ -150,14 +154,14 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="min-w-0 max-w-lg">
+              <div className="min-w-0 flex-1">
                 <h1 className="font-display text-3xl font-bold leading-[1.1] tracking-tight">
                   One long video in. Up to five shorts out.
                 </h1>
-                <p className="mt-3 text-sm leading-6 text-steel">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-steel">
                   ClipForge listens to your video, finds the moments worth posting, and cuts them
-                  to 9:16 with captions burned in. Nothing is stored; results disappear after an
-                  hour.
+                  to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored;
+                  results disappear after an hour.
                 </p>
 
                 <label className="mt-6 block text-sm">
@@ -172,7 +176,7 @@ export default function Home() {
                     }}
                     placeholder="https://www.youtube.com/watch?v=…"
                     disabled={busy}
-                    className="field mt-1.5 block w-full"
+                    className="field mt-1.5 block w-full max-w-2xl"
                   />
                   {fromYoutube && file && (
                     <span className="mt-1 block text-xs text-steel">

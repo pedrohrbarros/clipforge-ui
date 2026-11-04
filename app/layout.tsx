@@ -19,9 +19,19 @@ export const metadata: Metadata = {
   description: "Drop one video, get captioned vertical shorts.",
 };
 
+// Runs before paint so a saved light theme never flashes dark. Dark needs no attribute.
+const themeScript = `try{if(localStorage.getItem("clipforge-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

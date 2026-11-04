@@ -1,13 +1,36 @@
 @import "tailwindcss";
 
-@theme {
-  --color-paper: #e9ecf0;
-  --color-panel: #f7f8fa;
-  --color-ink: #141821;
-  --color-steel: #6b7380;
-  --color-line: #d3d8df;
-  --color-ember: #f2542d;
-  --color-ember-deep: #b8321a;
+/* Theme tokens. Dark is the default; data-theme="light" on <html> switches. */
+:root {
+  --paper: #1b1f26;
+  --panel: #242931;
+  --ink: #eef0f3;
+  --steel: #9aa3ae;
+  --line: #3a414b;
+  --ember: #f2542d;
+  --ember-deep: #d9471f;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --paper: #e9ecf0;
+  --panel: #f7f8fa;
+  --ink: #141821;
+  --steel: #6b7380;
+  --line: #d3d8df;
+  --ember: #f2542d;
+  --ember-deep: #b8321a;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-steel: var(--steel);
+  --color-line: var(--line);
+  --color-ember: var(--ember);
+  --color-ember-deep: var(--ember-deep);
   --font-display: var(--font-display), "Bricolage Grotesque", sans-serif;
   --font-body: var(--font-body), "Instrument Sans", sans-serif;
 }
@@ -16,6 +39,17 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
+}
+
+/* Theme toggle shows the icon for the theme you would switch to. */
+.theme-toggle .icon-sun {
+  display: none;
+}
+:root[data-theme="light"] .theme-toggle .icon-sun {
+  display: block;
+}
+:root[data-theme="light"] .theme-toggle .icon-moon {
+  display: none;
 }
 
 /* The 9:16 frame: drop zone, progress vessel and result preview share it. */

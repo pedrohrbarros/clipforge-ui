@@ -8,8 +8,8 @@ TypeScript and Tailwind, deployed on Vercel.
 
 1. Pings the API on load. If the Render free instance is asleep it shows "Waking the
    server" until it answers, then loads the quota panel from `GET /usage`.
-2. You drop or choose a video (under 500 MB), which previews inside the phone-shaped frame,
-   or paste a YouTube link instead. A link wins over a chosen file.
+2. You drop or choose a video (under 500 MB and 10 minutes), which previews inside the
+   phone-shaped frame, or paste a YouTube link instead. A link wins over a chosen file.
 3. "Make shorts" uploads it to `POST /jobs` with the captions flag, then polls
    `GET /jobs/{id}` every two seconds. Progress fills the frame from the bottom.
 4. When the job is done, each short appears as a playable 9:16 card with a download
@@ -34,6 +34,11 @@ npm run dev                  # http://localhost:3000
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the ClipForge API, no trailing slash |
+
+## Theme
+
+Dark by default. The toggle in the header switches to light and remembers the choice in
+`localStorage`; a tiny inline script in `app/layout.tsx` applies it before first paint.
 
 ## Scripts
 
