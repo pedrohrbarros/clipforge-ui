@@ -9,7 +9,7 @@ import { ShortCard } from "@/components/ShortCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { UsagePanel } from "@/components/UsagePanel";
 import { checkHealth, createJob, getJob, getUsage, zipUrl, type Job, type Usage } from "@/lib/api";
-import { errorText, jobErrorText, useLang, useT } from "@/lib/i18n";
+import { ApiError, errorText, jobErrorText, useLang, useT } from "@/lib/i18n";
 
 type Phase = "idle" | "uploading" | "processing" | "done" | "failed";
 
@@ -65,9 +65,11 @@ export default function Home() {
     try {
       const id = await createJob(file, captions);
       setPhase("processing");
+      let misses = 0;
       poll.current = setInterval(async () => {
         try {
           const next = await getJob(id);
+          misses = 0;
           setJob(next);
           if (next.status === "done" || next.status === "failed") {
             if (poll.current) clearInterval(poll.current);
@@ -76,9 +78,14 @@ export default function Home() {
             refreshUsage();
           }
         } catch (e) {
+          // A 404 means the server restarted and lost the job; anything else may be a
+          // transient network or proxy hiccup, so allow a few misses before giving up.
+          const gone = e instanceof ApiError && e.code === "expired";
+          misses += 1;
+          if (!gone && misses < 5) return;
           if (poll.current) clearInterval(poll.current);
           setPhase("failed");
-          setError(errorText(lang, e, "errors.lostContact"));
+          setError(errorText(lang, e, gone ? "errors.expired" : "errors.lostContact"));
         }
       }, 2000);
     } catch (e) {
@@ -98,15 +105,15 @@ export default function Home() {
   const progress = phase === "uploading" ? 2 : (job?.progress ?? 0);
 
   return (
-    <main className="flex w-full flex-col px-4 py-6 sm:px-8 lg:h-dvh lg:overflow-hidden">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <main className="flex min-h-dvh w-full flex-col px-4 py-5 sm:px-8 sm:py-6">
+      <header className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="flex items-center gap-3">
           <LogoMark className="h-10 w-auto text-ink" />
           <span className="font-display text-2xl font-bold tracking-tight">ClipForge</span>
         </div>
-        <div className="flex flex-wrap items-start gap-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
           <UsagePanel usage={usage} />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:pt-0.5">
             <LanguageSelect />
             <ThemeToggle />
           </div>
@@ -119,11 +126,8 @@ export default function Home() {
         </p>
       )}
 
-      <div className="mt-8 flex min-h-0 flex-1 flex-col">
-        <section
-          className="flex min-h-0 flex-1 flex-col justify-center"
-          aria-label={t("btn.make")}
-        >
+      <div className="mt-6 flex flex-1 flex-col sm:mt-8">
+        <section className="flex flex-1 flex-col justify-center" aria-label={t("btn.make")}>
           {phase === "done" && job ? (
             <div className="mx-auto flex w-full max-w-full flex-col items-center">
               <h1 className="font-display text-3xl font-bold tracking-tight">
@@ -131,12 +135,12 @@ export default function Home() {
                   ? t("results.one")
                   : t("results.many", { n: job.shorts.length })}
               </h1>
-              <div className="mt-5 flex max-w-full gap-5 overflow-x-auto pb-3">
+              <div className="mt-5 flex w-full max-w-full snap-x gap-5 overflow-x-auto px-1 pb-3 sm:w-auto">
                 {job.shorts.map((s) => (
                   <ShortCard key={s.index} jobId={job.id} short={s} />
                 ))}
               </div>
-              <div className="mt-4 flex gap-3">
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <a href={zipUrl(job.id)} className="btn">
                   {t("results.downloadAll")}
                 </a>
@@ -146,7 +150,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-center sm:gap-12">
+            <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 md:flex-row md:items-center md:justify-center md:gap-12">
               <div className="relative shrink-0">
                 <Dropzone
                   file={file}
@@ -164,13 +168,13 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="w-full min-w-0 max-w-xl">
+              <div className="w-full min-w-0 max-w-xl text-center md:text-left">
                 <h1 className="font-display text-3xl font-bold leading-[1.1] tracking-tight">
                   {t("hero.title")}
                 </h1>
                 <p className="mt-3 text-sm leading-6 text-steel">{t("hero.body")}</p>
 
-                <label className="mt-6 flex items-center gap-3 text-sm">
+                <label className="mt-6 flex items-center justify-center gap-3 text-sm md:justify-start">
                   <input
                     type="checkbox"
                     checked={captions}
@@ -181,7 +185,7 @@ export default function Home() {
                   {t("captions")}
                 </label>
 
-                <div className="mt-5 flex flex-wrap items-center gap-4">
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-4 md:justify-start">
                   <button
                     type="button"
                     onClick={generate}
@@ -202,7 +206,7 @@ export default function Home() {
                 </div>
 
                 {busy && job && (
-                  <div className="mt-6">
+                  <div className="mt-6 inline-block text-left">
                     <ProgressSteps status={job.status} progress={job.progress} />
                   </div>
                 )}

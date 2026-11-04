@@ -6,7 +6,7 @@ import { useT } from "@/lib/i18n";
 export function ShortCard({ jobId, short }: { jobId: string; short: Short }) {
   const t = useT();
   return (
-    <figure className="shrink-0">
+    <figure className="shrink-0 snap-start">
       <div className="phone overflow-hidden border-ink bg-ink">
         <video
           src={shortUrl(jobId, short.index)}

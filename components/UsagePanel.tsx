@@ -59,11 +59,11 @@ export function UsagePanel({ usage }: { usage: Usage | null }) {
     <section aria-label={t("usage.title")} className="text-sm leading-6">
       <p className="font-display text-ink">{t("usage.title")}</p>
       {usage ? (
-        <div className="mt-2 flex flex-wrap gap-x-8 gap-y-3">
-          <div className="w-72">
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-x-8">
+          <div className="w-full sm:w-72">
             <Meter label={t("usage.chat")} quota={usage.chat} />
           </div>
-          <div className="w-72">
+          <div className="w-full sm:w-72">
             <Meter label={t("usage.whisper")} quota={usage.whisper} />
           </div>
         </div>

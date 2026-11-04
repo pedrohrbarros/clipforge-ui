@@ -55,7 +55,7 @@ body {
 /* The 9:16 frame: drop zone, progress vessel and result preview share it. */
 .phone {
   aspect-ratio: 9 / 16;
-  height: clamp(300px, 52vh, 460px);
+  height: clamp(280px, 48vh, 460px);
   width: auto;
   border-width: 3px;
   border-style: solid;

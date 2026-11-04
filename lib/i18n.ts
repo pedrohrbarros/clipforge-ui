@@ -239,10 +239,11 @@ export class ApiError extends Error {
 
 /** Text for an API failure: the translated code when known, else the server's message. */
 export function errorText(lang: Lang, error: unknown, fallbackKey: string) {
-  if (error instanceof ApiError && error.code && en[`errors.${error.code}`]) {
-    return translate(lang, `errors.${error.code}`);
+  if (error instanceof ApiError) {
+    if (error.code && en[`errors.${error.code}`]) return translate(lang, `errors.${error.code}`);
+    if (error.message) return error.message;
   }
-  if (error instanceof Error && error.message) return error.message;
+  // Network failures and the like carry browser-language text; use our own instead.
   return translate(lang, fallbackKey);
 }
 
