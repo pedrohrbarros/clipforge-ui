@@ -69,9 +69,22 @@ function auth(extra: HeadersInit = {}): HeadersInit {
   return { Authorization: `Bearer ${getCredential() ?? ""}`, ...extra };
 }
 
-// Fallback media URLs served by the API (no storage bucket configured) carry the token.
-const withToken = (path: string) =>
-  `${API_URL}${path}?token=${encodeURIComponent(getCredential() ?? "")}`;
+/** Fetch a media file from the API with the Authorization header (fallback without storage). */
+export async function fetchMedia(path: string): Promise<Blob> {
+  const res = await fetch(`${API_URL}${path}`, { headers: auth() });
+  if (!res.ok) throw await readError(res);
+  return res.blob();
+}
+
+/** Trigger a browser download of a blob under the given file name. */
+export function saveBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
 
 export async function checkHealth(timeoutMs = 3000): Promise<boolean> {
   const controller = new AbortController();
@@ -123,10 +136,10 @@ export async function getJob(id: string): Promise<Job> {
   return res.json();
 }
 
-export const shortUrl = (job: Job, short: Short, download = false) =>
-  short.url ??
-  withToken(`/jobs/${job.id}/shorts/${short.index}`) +
-    (download ? "&download=1" : "");
+export const shortPath = (job: Job, short: Short) =>
+  `/jobs/${job.id}/shorts/${short.index}`;
+export const zipPath = (job: Job) => `/jobs/${job.id}/zip`;
 
-export const zipUrl = (job: Job) =>
-  job.zip_url ?? withToken(`/jobs/${job.id}/zip`);
+/** Signed storage link, with Supabase's download hint when saving. */
+export const downloadUrl = (url: string, filename: string) =>
+  `${url}${url.includes("?") ? "&" : "?"}download=${encodeURIComponent(filename)}`;

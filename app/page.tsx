@@ -16,7 +16,10 @@ import {
   getJob,
   getMe,
   getUsage,
-  zipUrl,
+  fetchMedia,
+  saveBlob,
+  zipPath,
+  downloadUrl,
   type Job,
   type Me,
   type Usage,
@@ -176,9 +179,26 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  <a href={zipUrl(job)} className="btn">
-                    {t("results.downloadAll")}
-                  </a>
+                  {job.zip_url ? (
+                    <a
+                      href={downloadUrl(job.zip_url, "clipforge-shorts.zip")}
+                      className="btn"
+                    >
+                      {t("results.downloadAll")}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() =>
+                        fetchMedia(zipPath(job)).then((b) =>
+                          saveBlob(b, "clipforge-shorts.zip"),
+                        )
+                      }
+                    >
+                      {t("results.downloadAll")}
+                    </button>
+                  )}
                   <button
                     type="button"
                     onClick={reset}
