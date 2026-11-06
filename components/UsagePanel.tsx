@@ -1,6 +1,7 @@
 "use client";
 
 import type { Quota, Usage } from "@/lib/api";
+import { Spinner } from "@/components/Spinner";
 import { useT } from "@/lib/i18n";
 
 function Meter({ label, quota }: { label: string; quota: Quota | null }) {
@@ -70,7 +71,9 @@ export function UsagePanel({ usage }: { usage: Usage | null }) {
           </div>
         </div>
       ) : (
-        <p className="text-steel">{t("usage.checking")}</p>
+        <div className="mt-2 flex h-12 items-center">
+          <Spinner />
+        </div>
       )}
     </section>
   );

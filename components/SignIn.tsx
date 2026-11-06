@@ -2,11 +2,16 @@
 
 import { GoogleLogin } from "@react-oauth/google";
 import { LogoMark } from "@/components/Logo";
-import { setCredential } from "@/lib/auth";
-import { useT } from "@/lib/i18n";
+import { useState } from "react";
+import { signInWithGoogle } from "@/lib/api";
+import { Spinner } from "@/components/Spinner";
+import { errorText, useLang, useT } from "@/lib/i18n";
 
 export function SignIn() {
   const t = useT();
+  const lang = useLang();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const configured = Boolean(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
   return (
     <section className="mx-auto flex max-w-md flex-1 flex-col items-center justify-center text-center">
@@ -19,7 +24,14 @@ export function SignIn() {
         {configured ? (
           <GoogleLogin
             onSuccess={(res) => {
-              if (res.credential) setCredential(res.credential);
+              if (!res.credential) return;
+              setBusy(true);
+              setError(null);
+              signInWithGoogle(res.credential)
+                .catch((e) =>
+                  setError(errorText(lang, e, "errors.lostContact")),
+                )
+                .finally(() => setBusy(false));
             }}
             onError={() => undefined}
             shape="pill"
@@ -29,6 +41,16 @@ export function SignIn() {
           <p className="text-sm text-ember-deep">{t("signin.unconfigured")}</p>
         )}
       </div>
+      {busy && (
+        <div className="mt-4">
+          <Spinner />
+        </div>
+      )}
+      {error && (
+        <p className="mt-4 text-sm text-ember-deep" role="alert">
+          {error}
+        </p>
+      )}
     </section>
   );
 }

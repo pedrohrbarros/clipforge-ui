@@ -1,4 +1,4 @@
-import { getCredential, setCredential } from "@/lib/auth";
+import { getSession, setSession } from "@/lib/auth";
 import { ApiError } from "@/lib/i18n";
 
 export const API_URL =
@@ -39,7 +39,18 @@ export type Job = {
   code: string;
   shorts: Short[];
   zip_url: string | null;
+  stored: boolean;
+  expired: boolean;
+  created_at: string | null;
+  finished_at: string | null;
 };
+
+export const RUNNING: JobStatus[] = [
+  "queued",
+  "transcribing",
+  "selecting",
+  "rendering",
+];
 
 export type Me = {
   email: string;
@@ -50,7 +61,7 @@ export type Me = {
 };
 
 async function readError(res: Response): Promise<ApiError> {
-  if (res.status === 401) setCredential(null); // expired or revoked sign-in
+  if (res.status === 401) setSession(null); // expired or revoked session
   try {
     const body = await res.json();
     const detail = body.detail;
@@ -66,7 +77,7 @@ async function readError(res: Response): Promise<ApiError> {
 }
 
 function auth(extra: HeadersInit = {}): HeadersInit {
-  return { Authorization: `Bearer ${getCredential() ?? ""}`, ...extra };
+  return { Authorization: `Bearer ${getSession() ?? ""}`, ...extra };
 }
 
 /** Fetch a media file from the API with the Authorization header (fallback without storage). */
@@ -99,6 +110,18 @@ export async function checkHealth(timeoutMs = 3000): Promise<boolean> {
   }
 }
 
+/** Exchange a Google credential for a ClipForge session (24 h) and remember it. */
+export async function signInWithGoogle(credential: string): Promise<void> {
+  const res = await fetch(`${API_URL}/auth/google`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ credential }),
+  });
+  if (!res.ok) throw await readError(res);
+  const { token } = await res.json();
+  setSession(token);
+}
+
 export async function getMe(): Promise<Me> {
   const res = await fetch(`${API_URL}/me`, { headers: auth() });
   if (!res.ok) throw await readError(res);
@@ -111,15 +134,19 @@ export async function getUsage(): Promise<Usage> {
   return res.json();
 }
 
+export async function listJobs(): Promise<Job[]> {
+  const res = await fetch(`${API_URL}/jobs`, { headers: auth() });
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
 export async function createJob(
   file: File,
   captions: boolean,
-  lang: string,
 ): Promise<string> {
   const form = new FormData();
   form.append("video", file);
   form.append("captions", String(captions));
-  form.append("lang", lang);
   const res = await fetch(`${API_URL}/jobs`, {
     method: "POST",
     body: form,

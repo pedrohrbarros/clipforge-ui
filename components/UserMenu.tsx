@@ -1,13 +1,14 @@
 "use client";
 
 import type { Me } from "@/lib/api";
-import { decodeProfile, setCredential, useCredential } from "@/lib/auth";
+import { Spinner } from "@/components/Spinner";
+import { decodeProfile, setSession, useSession } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
 
 export function UserMenu({ me }: { me: Me | null }) {
   const t = useT();
-  const credential = useCredential();
-  const profile = credential ? decodeProfile(credential) : null;
+  const session = useSession();
+  const profile = session ? decodeProfile(session) : null;
   if (!profile) return null;
   const left = me ? Math.max(0, me.limit - me.used_today) : null;
   return (
@@ -24,14 +25,16 @@ export function UserMenu({ me }: { me: Me | null }) {
       <div className="leading-tight">
         <p className="font-display text-ink">{profile.name || profile.email}</p>
         <p className="text-steel">
-          {left == null
-            ? profile.email
-            : t("me.left", { n: left, limit: me!.limit })}
+          {left == null ? (
+            <Spinner className="h-3 w-3" />
+          ) : (
+            t("me.left", { n: left, limit: me!.limit })
+          )}
         </p>
       </div>
       <button
         type="button"
-        onClick={() => setCredential(null)}
+        onClick={() => setSession(null)}
         className="btn btn-quiet !py-2 text-xs"
       >
         {t("me.signout")}

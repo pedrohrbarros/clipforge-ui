@@ -9,14 +9,27 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
-  "signin.title": "Sign in to make shorts",
+  "history.new": "New video",
+  "history.note": "Your videos stay here for 180 days.",
+  "history.title": "Your videos",
+  "history.empty":
+    "Nothing yet. Your jobs will show up here, and you can come back any time to check on them.",
+  "history.view": "View",
+  "history.expired": "Links expired",
+  "status.queued": "Queued",
+  "status.transcribing": "Transcribing",
+  "status.selecting": "Picking moments",
+  "status.rendering": "Rendering",
+  "status.done": "Done",
+  "status.failed": "Failed",
+  "resume.note":
+    "A job of yours is still running; you can close this page and come back later.",
   "signin.body":
-    "ClipForge uses your Google account to keep a fair daily limit and to email you when your shorts are ready.",
+    "ClipForge uses your Google account to keep a fair daily limit and to remember your videos, so you can come back later to collect them.",
+  "signin.title": "Sign in to make shorts",
   "signin.unconfigured": "Google sign-in is not configured on this site.",
   "me.left": "{n} of {limit} videos left today",
   "me.signout": "Sign out",
-  "email.note":
-    "We will email {email} when it is done. You can close this page.",
   "errors.daily_limit":
     "You have used your videos for today. It resets at midnight UTC.",
   "errors.unauthorized": "Your sign-in expired. Please sign in again.",
@@ -28,11 +41,8 @@ const en: Dict = {
   "usage.whisper": "Transcribing",
   "usage.left": "{remaining} of {limit} left",
   "usage.na": "not available",
-  "usage.checking": "Checking…",
   "usage.resets": "Resets in {time}",
   "usage.aria": "{label}, {pct}% of today's uses left",
-  waking:
-    "Waking the server. The free tier sleeps when idle, this takes up to a minute.",
   "hero.title": "One long video in. Up to five shorts out.",
   "hero.body":
     "ClipForge listens to your video, finds the moments worth posting, and cuts them to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored; results disappear after an hour.",
@@ -73,14 +83,27 @@ const en: Dict = {
 };
 
 const pt: Dict = {
-  "signin.title": "Entre para criar shorts",
+  "history.new": "Novo vídeo",
+  "history.note": "Seus vídeos ficam aqui por 180 dias.",
+  "history.title": "Seus vídeos",
+  "history.empty":
+    "Nada ainda. Seus trabalhos aparecerão aqui, e você pode voltar quando quiser para conferir.",
+  "history.view": "Ver",
+  "history.expired": "Links expirados",
+  "status.queued": "Na fila",
+  "status.transcribing": "Transcrevendo",
+  "status.selecting": "Escolhendo momentos",
+  "status.rendering": "Renderizando",
+  "status.done": "Concluído",
+  "status.failed": "Falhou",
+  "resume.note":
+    "Um trabalho seu ainda está em andamento; você pode fechar esta página e voltar depois.",
   "signin.body":
-    "O ClipForge usa sua conta Google para manter um limite diário justo e avisar por e-mail quando os shorts ficarem prontos.",
+    "O ClipForge usa sua conta Google para manter um limite diário justo e lembrar seus vídeos, para você voltar depois e buscá-los.",
+  "signin.title": "Entre para criar shorts",
   "signin.unconfigured": "O login com Google não está configurado neste site.",
   "me.left": "{n} de {limit} vídeos restantes hoje",
   "me.signout": "Sair",
-  "email.note":
-    "Vamos enviar um e-mail para {email} quando terminar. Você pode fechar esta página.",
   "errors.daily_limit":
     "Você já usou seus vídeos de hoje. Renova à meia-noite UTC.",
   "errors.unauthorized": "Seu login expirou. Entre de novo.",
@@ -93,11 +116,8 @@ const pt: Dict = {
   "usage.whisper": "Transcrição",
   "usage.left": "{remaining} de {limit} restantes",
   "usage.na": "indisponível",
-  "usage.checking": "Verificando…",
   "usage.resets": "Renova em {time}",
   "usage.aria": "{label}, {pct}% dos usos de hoje restantes",
-  waking:
-    "Acordando o servidor. O plano gratuito dorme quando ocioso, isso leva até um minuto.",
   "hero.title": "Um vídeo longo entra. Até cinco shorts saem.",
   "hero.body":
     "O ClipForge ouve o seu vídeo, encontra os momentos que valem um post e corta em 9:16 com legendas gravadas. Vídeos de até 10 minutos. Nada é armazenado; os resultados somem após uma hora.",
@@ -139,15 +159,28 @@ const pt: Dict = {
 };
 
 const es: Dict = {
-  "signin.title": "Inicia sesión para crear shorts",
+  "history.new": "Nuevo vídeo",
+  "history.note": "Tus vídeos se quedan aquí durante 180 días.",
+  "history.title": "Tus vídeos",
+  "history.empty":
+    "Nada todavía. Tus trabajos aparecerán aquí y puedes volver cuando quieras a comprobarlos.",
+  "history.view": "Ver",
+  "history.expired": "Enlaces caducados",
+  "status.queued": "En cola",
+  "status.transcribing": "Transcribiendo",
+  "status.selecting": "Eligiendo momentos",
+  "status.rendering": "Renderizando",
+  "status.done": "Listo",
+  "status.failed": "Falló",
+  "resume.note":
+    "Un trabajo tuyo sigue en marcha; puedes cerrar esta página y volver más tarde.",
   "signin.body":
-    "ClipForge usa tu cuenta de Google para mantener un límite diario justo y avisarte por correo cuando tus shorts estén listos.",
+    "ClipForge usa tu cuenta de Google para mantener un límite diario justo y recordar tus vídeos, para que vuelvas luego a recogerlos.",
+  "signin.title": "Inicia sesión para crear shorts",
   "signin.unconfigured":
     "El inicio de sesión con Google no está configurado en este sitio.",
   "me.left": "{n} de {limit} vídeos restantes hoy",
   "me.signout": "Cerrar sesión",
-  "email.note":
-    "Te enviaremos un correo a {email} cuando termine. Puedes cerrar esta página.",
   "errors.daily_limit":
     "Ya usaste tus vídeos de hoy. Se renueva a medianoche UTC.",
   "errors.unauthorized": "Tu sesión caducó. Inicia sesión de nuevo.",
@@ -160,11 +193,8 @@ const es: Dict = {
   "usage.whisper": "Transcripción",
   "usage.left": "{remaining} de {limit} restantes",
   "usage.na": "no disponible",
-  "usage.checking": "Comprobando…",
   "usage.resets": "Se renueva en {time}",
   "usage.aria": "{label}, {pct}% de los usos de hoy restantes",
-  waking:
-    "Despertando el servidor. El plan gratuito se duerme si está inactivo, tarda hasta un minuto.",
   "hero.title": "Entra un vídeo largo. Salen hasta cinco shorts.",
   "hero.body":
     "ClipForge escucha tu vídeo, encuentra los momentos que merecen publicarse y los corta en 9:16 con subtítulos grabados. Vídeos de hasta 10 minutos. No se guarda nada; los resultados desaparecen en una hora.",

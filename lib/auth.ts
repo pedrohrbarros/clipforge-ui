@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-export const CRED_KEY = "clipforge-google";
+export const SESSION_KEY = "clipforge-session";
 
 export type Profile = {
   email: string;
@@ -11,15 +11,16 @@ export type Profile = {
   exp: number;
 };
 
-export function decodeProfile(credential: string): Profile | null {
+/** Claims of the ClipForge session token (a JWT issued by the API after Google sign-in). */
+export function decodeProfile(token: string): Profile | null {
   try {
     const payload = JSON.parse(
-      atob(credential.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
+      atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
     );
     return {
       email: payload.email,
       name: payload.name ?? "",
-      picture: payload.picture,
+      picture: payload.picture || undefined,
       exp: payload.exp,
     };
   } catch {
@@ -34,7 +35,7 @@ const listeners = new Set<() => void>();
 function getSnapshot(): string | null {
   if (current === undefined) {
     try {
-      current = sessionStorage.getItem(CRED_KEY);
+      current = localStorage.getItem(SESSION_KEY);
     } catch {
       current = null;
     }
@@ -53,21 +54,21 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
-export function getCredential(): string | null {
+export function getSession(): string | null {
   return getSnapshot();
 }
 
-export function setCredential(value: string | null) {
+export function setSession(value: string | null) {
   current = value;
   try {
-    if (value) sessionStorage.setItem(CRED_KEY, value);
-    else sessionStorage.removeItem(CRED_KEY);
+    if (value) localStorage.setItem(SESSION_KEY, value);
+    else localStorage.removeItem(SESSION_KEY);
   } catch {
     // storage unavailable; the session just will not survive a reload
   }
   listeners.forEach((l) => l());
 }
 
-export function useCredential(): string | null {
+export function useSession(): string | null {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

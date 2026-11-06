@@ -6,8 +6,8 @@ TypeScript and Tailwind, deployed on Vercel.
 
 ## What the page does
 
-1. Pings the API on load. If the Render free instance is asleep it shows "Waking the
-   server" until it answers, then loads the quota panel from `GET /usage`.
+1. Pings the API on load, showing spinners until it answers, then loads the account
+   panels from `GET /me`, `GET /usage` and `GET /jobs`.
 2. You drop or choose a video (under 500 MB and 10 minutes), which previews inside the
    phone-shaped frame.
 3. "Make shorts" uploads it to `POST /jobs` with the captions flag, then polls
@@ -37,13 +37,16 @@ npm run dev                  # http://localhost:3000
 ## Sign-in
 
 Google only. `components/SignIn.tsx` renders Google's button through `@react-oauth/google`
-with `GOOGLE_CLIENT_ID` (exposed to the browser by `next.config.ts`); the returned ID token is kept in `sessionStorage`
-(`lib/auth.ts`) and sent as `Authorization: Bearer` on every API call. A 401 clears it and
-shows the sign-in screen again. The header shows the user's picture, name and how many of
+with `GOOGLE_CLIENT_ID` (exposed to the browser by `next.config.ts`). The returned Google
+credential is exchanged once at `POST /auth/google` for a ClipForge session token valid 24
+hours, kept in `localStorage` (`lib/auth.ts`) and sent as `Authorization: Bearer` on every
+API call. A 401 clears it and shows the sign-in screen again. The header shows the user's picture, name and how many of
 their daily videos are left, and a Sign out button.
 
-While a job runs the page says the user will get an email when it is done, and finished
-shorts play and download from the signed links the API returns.
+Jobs belong to the signed-in account: a sidebar lists the user's videos for 180 days,
+resumes one that is still running, and reopens finished ones with fresh download links from
+the API. While the API is unreachable (for example waking on a free host) the panels show
+spinners and the form stays disabled.
 
 ## Languages
 
@@ -89,6 +92,8 @@ components/UsagePanel.tsx remaining uses per model as progress bars
 components/Logo.tsx       the logo mark (also in public/logo.svg)
 components/SignIn.tsx     Google sign-in screen
 components/UserMenu.tsx   picture, name, daily videos left, sign out
+components/Sidebar.tsx    the user's videos, with status and reopen
+components/Spinner.tsx    loading indicator
 components/Providers.tsx  GoogleOAuthProvider wrapper
 lib/auth.ts               Google credential store
 components/LanguageSelect.tsx  language dropdown
