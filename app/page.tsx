@@ -5,7 +5,12 @@ import { AspectRatio, type Aspect } from "@/components/AspectRatio";
 import { Dropzone } from "@/components/Dropzone";
 import { LanguageSelect } from "@/components/LanguageSelect";
 import { LogoMark } from "@/components/Logo";
-import { MinShorts } from "@/components/MinShorts";
+import { ModePicker, type Mode } from "@/components/ModePicker";
+import {
+  DEFAULT_PLAN,
+  ShortPlan,
+  type PlanGroup,
+} from "@/components/ShortPlan";
 import { ProgressFill, ProgressSteps } from "@/components/Progress";
 import { ShortCard } from "@/components/ShortCard";
 import { Sidebar } from "@/components/Sidebar";
@@ -44,7 +49,8 @@ export default function Home() {
   const [jobs, setJobs] = useState<Job[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [captions, setCaptions] = useState(true);
-  const [minClips, setMinClips] = useState(1);
+  const [plan, setPlan] = useState<PlanGroup[]>(DEFAULT_PLAN);
+  const [mode, setMode] = useState<Mode>("best");
   const [aspect, setAspect] = useState<Aspect>("9:16");
   const [phase, setPhase] = useState<Phase>("idle");
   const [job, setJob] = useState<Job | null>(null);
@@ -139,7 +145,7 @@ export default function Home() {
     setJob(null);
     setPhase("uploading");
     try {
-      const id = await createJob(file, captions, minClips, aspect);
+      const id = await createJob(file, { captions, plan, mode, aspect });
       refreshAccount();
       follow(id);
     } catch (e) {
@@ -302,9 +308,9 @@ export default function Home() {
                   </label>
 
                   <div className="mt-5 flex justify-center md:justify-start">
-                    <MinShorts
-                      value={minClips}
-                      onChange={setMinClips}
+                    <ShortPlan
+                      value={plan}
+                      onChange={setPlan}
                       disabled={busy || !ready}
                     />
                   </div>
@@ -313,6 +319,14 @@ export default function Home() {
                     <AspectRatio
                       value={aspect}
                       onChange={setAspect}
+                      disabled={busy || !ready}
+                    />
+                  </div>
+
+                  <div className="mt-5 flex justify-center md:justify-start">
+                    <ModePicker
+                      value={mode}
+                      onChange={setMode}
                       disabled={busy || !ready}
                     />
                   </div>

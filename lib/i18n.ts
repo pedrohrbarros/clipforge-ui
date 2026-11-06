@@ -9,14 +9,31 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
+  "plan.label": "How many shorts, and how long?",
+  "plan.count": "How many",
+  "plan.of": "shorts of",
+  "plan.min": "Minimum seconds",
+  "plan.to": "to",
+  "plan.max": "Maximum seconds",
+  "plan.seconds": "seconds",
+  "plan.remove": "Remove this row",
+  "plan.add": "Add another length",
+  "plan.total":
+    "{n} of {max} shorts per video. {sec} seconds is the longest a short can be.",
+  "mode.label": "What kind of shorts?",
+  "mode.best": "Best moments",
+  "mode.best.hint": "The AI picks the strongest moments anywhere in the video.",
+  "mode.split": "Split into parts",
+  "mode.split.hint":
+    "The whole video, cut in order into parts of the lengths above.",
+  "errors.bad_plan":
+    "The shorts plan is invalid. Keep at most 10 shorts and 5 to 60 seconds each.",
+  "errors.bad_mode": "Unknown shorts mode.",
   "aspect.label": "Shape",
   "aspect.9:16": "9:16 Shorts",
   "aspect.4:5": "4:5 Feed",
   "aspect.1:1": "1:1 Square",
   "aspect.16:9": "16:9 Wide",
-  "min.label": "At least how many shorts?",
-  "min.hint":
-    "Up to {max}. Fewer if the video does not have enough good moments.",
   "history.new": "New video",
   "history.note": "Your videos stay here for 180 days.",
   "history.title": "Your videos",
@@ -91,13 +108,32 @@ const en: Dict = {
 };
 
 const pt: Dict = {
+  "plan.label": "Quantos shorts, e de que duração?",
+  "plan.count": "Quantos",
+  "plan.of": "shorts de",
+  "plan.min": "Mínimo de segundos",
+  "plan.to": "a",
+  "plan.max": "Máximo de segundos",
+  "plan.seconds": "segundos",
+  "plan.remove": "Remover esta linha",
+  "plan.add": "Adicionar outra duração",
+  "plan.total":
+    "{n} de {max} shorts por vídeo. {sec} segundos é o máximo de um short.",
+  "mode.label": "Que tipo de shorts?",
+  "mode.best": "Melhores momentos",
+  "mode.best.hint":
+    "A IA escolhe os momentos mais fortes em qualquer parte do vídeo.",
+  "mode.split": "Dividir em partes",
+  "mode.split.hint":
+    "O vídeo inteiro, cortado em ordem em partes com as durações acima.",
+  "errors.bad_plan":
+    "O plano de shorts é inválido. No máximo 10 shorts, de 5 a 60 segundos cada.",
+  "errors.bad_mode": "Tipo de shorts desconhecido.",
   "aspect.label": "Formato",
   "aspect.9:16": "9:16 Shorts",
   "aspect.4:5": "4:5 Feed",
   "aspect.1:1": "1:1 Quadrado",
   "aspect.16:9": "16:9 Largo",
-  "min.label": "No mínimo quantos shorts?",
-  "min.hint": "Até {max}. Menos se o vídeo não tiver momentos bons o bastante.",
   "history.new": "Novo vídeo",
   "history.note": "Seus vídeos ficam aqui por 180 dias.",
   "history.title": "Seus vídeos",
@@ -174,14 +210,32 @@ const pt: Dict = {
 };
 
 const es: Dict = {
+  "plan.label": "¿Cuántos shorts y de qué duración?",
+  "plan.count": "Cuántos",
+  "plan.of": "shorts de",
+  "plan.min": "Segundos mínimos",
+  "plan.to": "a",
+  "plan.max": "Segundos máximos",
+  "plan.seconds": "segundos",
+  "plan.remove": "Quitar esta fila",
+  "plan.add": "Añadir otra duración",
+  "plan.total":
+    "{n} de {max} shorts por vídeo. {sec} segundos es lo máximo que dura un short.",
+  "mode.label": "¿Qué tipo de shorts?",
+  "mode.best": "Mejores momentos",
+  "mode.best.hint":
+    "La IA elige los momentos más fuertes en cualquier parte del vídeo.",
+  "mode.split": "Dividir en partes",
+  "mode.split.hint":
+    "El vídeo completo, cortado en orden en partes con las duraciones de arriba.",
+  "errors.bad_plan":
+    "El plan de shorts no es válido. Como máximo 10 shorts, de 5 a 60 segundos cada uno.",
+  "errors.bad_mode": "Tipo de shorts desconocido.",
   "aspect.label": "Formato",
   "aspect.9:16": "9:16 Shorts",
   "aspect.4:5": "4:5 Feed",
   "aspect.1:1": "1:1 Cuadrado",
   "aspect.16:9": "16:9 Ancho",
-  "min.label": "¿Al menos cuántos shorts?",
-  "min.hint":
-    "Hasta {max}. Menos si el vídeo no tiene suficientes buenos momentos.",
   "history.new": "Nuevo vídeo",
   "history.note": "Tus vídeos se quedan aquí durante 180 días.",
   "history.title": "Tus vídeos",

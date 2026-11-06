@@ -141,17 +141,23 @@ export async function listJobs(): Promise<Job[]> {
   return res.json();
 }
 
+export type JobOptions = {
+  captions: boolean;
+  plan: { count: number; min_seconds: number; max_seconds: number }[];
+  mode: "best" | "split";
+  aspect: string;
+};
+
 export async function createJob(
   file: File,
-  captions: boolean,
-  minClips: number,
-  aspect: string,
+  options: JobOptions,
 ): Promise<string> {
   const form = new FormData();
   form.append("video", file);
-  form.append("captions", String(captions));
-  form.append("min_clips", String(minClips));
-  form.append("aspect", aspect);
+  form.append("captions", String(options.captions));
+  form.append("plan", JSON.stringify(options.plan));
+  form.append("mode", options.mode);
+  form.append("aspect", options.aspect);
   const res = await fetch(`${API_URL}/jobs`, {
     method: "POST",
     body: form,
