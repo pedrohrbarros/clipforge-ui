@@ -29,6 +29,7 @@ export type Short = {
   end: number;
   duration: number;
   url: string | null; // signed storage link, or null when served by the API
+  aspect?: string; // "9:16", "4:5", "1:1" or "16:9"
 };
 
 export type Job = {
@@ -143,10 +144,14 @@ export async function listJobs(): Promise<Job[]> {
 export async function createJob(
   file: File,
   captions: boolean,
+  minClips: number,
+  aspect: string,
 ): Promise<string> {
   const form = new FormData();
   form.append("video", file);
   form.append("captions", String(captions));
+  form.append("min_clips", String(minClips));
+  form.append("aspect", aspect);
   const res = await fetch(`${API_URL}/jobs`, {
     method: "POST",
     body: form,

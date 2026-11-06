@@ -94,6 +94,8 @@ components/SignIn.tsx     Google sign-in screen
 components/UserMenu.tsx   picture, name, daily videos left, sign out
 components/Sidebar.tsx    the user's videos, with status and reopen
 components/Spinner.tsx    loading indicator
+components/MinShorts.tsx  minimum-shorts picker (1 to 5, maximum fixed at 5)
+components/AspectRatio.tsx shape picker: 9:16, 4:5, 1:1, 16:9
 components/Providers.tsx  GoogleOAuthProvider wrapper
 lib/auth.ts               Google credential store
 components/LanguageSelect.tsx  language dropdown

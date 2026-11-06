@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AspectRatio, type Aspect } from "@/components/AspectRatio";
 import { Dropzone } from "@/components/Dropzone";
 import { LanguageSelect } from "@/components/LanguageSelect";
 import { LogoMark } from "@/components/Logo";
+import { MinShorts } from "@/components/MinShorts";
 import { ProgressFill, ProgressSteps } from "@/components/Progress";
 import { ShortCard } from "@/components/ShortCard";
 import { Sidebar } from "@/components/Sidebar";
@@ -42,6 +44,8 @@ export default function Home() {
   const [jobs, setJobs] = useState<Job[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [captions, setCaptions] = useState(true);
+  const [minClips, setMinClips] = useState(1);
+  const [aspect, setAspect] = useState<Aspect>("9:16");
   const [phase, setPhase] = useState<Phase>("idle");
   const [job, setJob] = useState<Job | null>(null);
   const [opening, setOpening] = useState(false);
@@ -135,7 +139,7 @@ export default function Home() {
     setJob(null);
     setPhase("uploading");
     try {
-      const id = await createJob(file, captions);
+      const id = await createJob(file, captions, minClips, aspect);
       refreshAccount();
       follow(id);
     } catch (e) {
@@ -296,6 +300,22 @@ export default function Home() {
                     />
                     {t("captions")}
                   </label>
+
+                  <div className="mt-5 flex justify-center md:justify-start">
+                    <MinShorts
+                      value={minClips}
+                      onChange={setMinClips}
+                      disabled={busy || !ready}
+                    />
+                  </div>
+
+                  <div className="mt-5 flex justify-center md:justify-start">
+                    <AspectRatio
+                      value={aspect}
+                      onChange={setAspect}
+                      disabled={busy || !ready}
+                    />
+                  </div>
 
                   <div className="mt-5 flex flex-wrap items-center justify-center gap-4 md:justify-start">
                     <button

@@ -9,6 +9,14 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
+  "aspect.label": "Shape",
+  "aspect.9:16": "9:16 Shorts",
+  "aspect.4:5": "4:5 Feed",
+  "aspect.1:1": "1:1 Square",
+  "aspect.16:9": "16:9 Wide",
+  "min.label": "At least how many shorts?",
+  "min.hint":
+    "Up to {max}. Fewer if the video does not have enough good moments.",
   "history.new": "New video",
   "history.note": "Your videos stay here for 180 days.",
   "history.title": "Your videos",
@@ -83,6 +91,13 @@ const en: Dict = {
 };
 
 const pt: Dict = {
+  "aspect.label": "Formato",
+  "aspect.9:16": "9:16 Shorts",
+  "aspect.4:5": "4:5 Feed",
+  "aspect.1:1": "1:1 Quadrado",
+  "aspect.16:9": "16:9 Largo",
+  "min.label": "No mínimo quantos shorts?",
+  "min.hint": "Até {max}. Menos se o vídeo não tiver momentos bons o bastante.",
   "history.new": "Novo vídeo",
   "history.note": "Seus vídeos ficam aqui por 180 dias.",
   "history.title": "Seus vídeos",
@@ -159,6 +174,14 @@ const pt: Dict = {
 };
 
 const es: Dict = {
+  "aspect.label": "Formato",
+  "aspect.9:16": "9:16 Shorts",
+  "aspect.4:5": "4:5 Feed",
+  "aspect.1:1": "1:1 Cuadrado",
+  "aspect.16:9": "16:9 Ancho",
+  "min.label": "¿Al menos cuántos shorts?",
+  "min.hint":
+    "Hasta {max}. Menos si el vídeo no tiene suficientes buenos momentos.",
   "history.new": "Nuevo vídeo",
   "history.note": "Tus vídeos se quedan aquí durante 180 días.",
   "history.title": "Tus vídeos",
