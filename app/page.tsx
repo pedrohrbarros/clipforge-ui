@@ -45,6 +45,7 @@ export default function Home() {
   const lang = useLang();
   const session = useSession();
   const [ready, setReady] = useState(false); // the API answered /health
+  const [showSidebar, setShowSidebar] = useState(false);
   const [me, setMe] = useState<Me | null>(null);
   const [jobs, setJobs] = useState<Job[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -197,6 +198,17 @@ export default function Home() {
           {session && <UsagePanel usage={usage} />}
           <div className="flex flex-wrap items-center gap-3 md:pt-0.5">
             {session && <UserMenu me={me} />}
+            {session && (
+              <button
+                type="button"
+                onClick={() => setShowSidebar((v) => !v)}
+                aria-pressed={showSidebar}
+                aria-controls="videos-sidebar"
+                className="btn btn-quiet !py-2 text-xs"
+              >
+                {t(showSidebar ? "sidebar.hide" : "sidebar.show")}
+              </button>
+            )}
             <LanguageSelect />
             <ThemeToggle />
           </div>
@@ -207,13 +219,15 @@ export default function Home() {
 
       {session && (
         <div className="mt-6 flex flex-1 flex-col gap-6 sm:mt-8 lg:flex-row lg:items-stretch">
-          <Sidebar
-            jobs={jobs}
-            loading={!ready}
-            currentId={job?.id ?? null}
-            onSelect={open}
-            onNew={reset}
-          />
+          {showSidebar && (
+            <Sidebar
+              jobs={jobs}
+              loading={!ready}
+              currentId={job?.id ?? null}
+              onSelect={open}
+              onNew={reset}
+            />
+          )}
 
           <section
             className="flex min-w-0 flex-1 flex-col justify-center"

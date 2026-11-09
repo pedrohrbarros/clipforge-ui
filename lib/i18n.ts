@@ -9,6 +9,8 @@ export const LANG_KEY = "clipforge-lang";
 type Dict = Record<string, string>;
 
 const en: Dict = {
+  "sidebar.show": "Show my videos",
+  "sidebar.hide": "Hide my videos",
   "plan.label": "How many shorts, and how long?",
   "plan.count": "How many",
   "plan.of": "shorts of",
@@ -108,6 +110,8 @@ const en: Dict = {
 };
 
 const pt: Dict = {
+  "sidebar.show": "Mostrar meus vídeos",
+  "sidebar.hide": "Ocultar meus vídeos",
   "plan.label": "Quantos shorts, e de que duração?",
   "plan.count": "Quantos",
   "plan.of": "shorts de",
@@ -210,6 +214,8 @@ const pt: Dict = {
 };
 
 const es: Dict = {
+  "sidebar.show": "Mostrar mis vídeos",
+  "sidebar.hide": "Ocultar mis vídeos",
   "plan.label": "¿Cuántos shorts y de qué duración?",
   "plan.count": "Cuántos",
   "plan.of": "shorts de",

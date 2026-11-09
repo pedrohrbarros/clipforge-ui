@@ -26,6 +26,7 @@ export function Sidebar({
   return (
     <aside
       aria-labelledby="sidebar-heading"
+      id="videos-sidebar"
       className="flex w-full shrink-0 flex-col rounded-2xl border-2 border-line bg-panel/40 p-4 lg:h-full lg:w-72"
     >
       <div className="flex items-center justify-between gap-3">
