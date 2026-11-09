@@ -38,8 +38,8 @@ npm run dev                  # http://localhost:3000
 
 Google only. `components/SignIn.tsx` renders Google's button through `@react-oauth/google`
 with `GOOGLE_CLIENT_ID` (exposed to the browser by `next.config.ts`). The returned Google
-credential is exchanged once at `POST /auth/google` for a ClipForge session token valid 24
-hours, kept in `localStorage` (`lib/auth.ts`) and sent as `Authorization: Bearer` on every
+credential is exchanged once at `POST /auth/google` for a ClipForge session token valid three
+days, kept in `localStorage` (`lib/auth.ts`) and sent as `Authorization: Bearer` on every
 API call. A 401 clears it and shows the sign-in screen again. The header shows the user's picture, name and how many of
 their daily videos are left, and a Sign out button.
 
