@@ -261,6 +261,10 @@ export default function Home() {
                     >
                       {t("results.downloadAll")}
                     </a>
+                  ) : job.stored ? (
+                    <p className="w-full text-center text-sm text-steel">
+                      {t("results.noZip")}
+                    </p>
                   ) : (
                     <button
                       type="button"
