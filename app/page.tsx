@@ -282,7 +282,7 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <div className="flex w-full flex-col items-center gap-8 md:flex-row md:items-center md:gap-12 lg:gap-16">
+              <div className="flex w-full flex-col items-center gap-8 md:flex-row md:items-center md:gap-14 md:pl-[20%] lg:gap-20">
                 <div className="relative shrink-0">
                   <Dropzone
                     file={file}
