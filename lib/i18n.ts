@@ -55,7 +55,6 @@ const en: Dict = {
     "ClipForge uses your Google account to keep a fair daily limit and to remember your videos, so you can come back later to collect them.",
   "signin.title": "Sign in to make shorts",
   "signin.unconfigured": "Google sign-in is not configured on this site.",
-  "me.left": "{n} of {limit} videos left today",
   "me.signout": "Sign out",
   "errors.daily_limit":
     "You have used your videos for today. It resets at midnight UTC.",
@@ -64,12 +63,9 @@ const en: Dict = {
   "theme.toggle": "Switch between dark and light theme",
   "lang.label": "Language",
   "usage.title": "Uses left today",
-  "usage.chat": "Picking moments",
-  "usage.whisper": "Transcribing",
   "usage.left": "{remaining} of {limit} left",
-  "usage.na": "not available",
-  "usage.resets": "Resets in {time}",
-  "usage.aria": "{label}, {pct}% of today's uses left",
+  "usage.resets": "Resets at {time}",
+  "usage.aria": "{pct}% of today's uses left",
   "hero.title": "One long video in. Up to five shorts out.",
   "hero.body":
     "ClipForge listens to your video, finds the moments worth posting, and cuts them to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored; results disappear after an hour.",
@@ -158,7 +154,6 @@ const pt: Dict = {
     "O ClipForge usa sua conta Google para manter um limite diário justo e lembrar seus vídeos, para você voltar depois e buscá-los.",
   "signin.title": "Entre para criar shorts",
   "signin.unconfigured": "O login com Google não está configurado neste site.",
-  "me.left": "{n} de {limit} vídeos restantes hoje",
   "me.signout": "Sair",
   "errors.daily_limit":
     "Você já usou seus vídeos de hoje. Renova à meia-noite UTC.",
@@ -168,12 +163,9 @@ const pt: Dict = {
   "theme.toggle": "Alternar entre tema escuro e claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoje",
-  "usage.chat": "Momentos",
-  "usage.whisper": "Transcrição",
   "usage.left": "{remaining} de {limit} restantes",
-  "usage.na": "indisponível",
-  "usage.resets": "Renova em {time}",
-  "usage.aria": "{label}, {pct}% dos usos de hoje restantes",
+  "usage.resets": "Renova às {time}",
+  "usage.aria": "{pct}% dos usos de hoje restantes",
   "hero.title": "Um vídeo longo entra. Até cinco shorts saem.",
   "hero.body":
     "O ClipForge ouve o seu vídeo, encontra os momentos que valem um post e corta em 9:16 com legendas gravadas. Vídeos de até 10 minutos. Nada é armazenado; os resultados somem após uma hora.",
@@ -264,7 +256,6 @@ const es: Dict = {
   "signin.title": "Inicia sesión para crear shorts",
   "signin.unconfigured":
     "El inicio de sesión con Google no está configurado en este sitio.",
-  "me.left": "{n} de {limit} vídeos restantes hoy",
   "me.signout": "Cerrar sesión",
   "errors.daily_limit":
     "Ya usaste tus vídeos de hoy. Se renueva a medianoche UTC.",
@@ -274,12 +265,9 @@ const es: Dict = {
   "theme.toggle": "Cambiar entre tema oscuro y claro",
   "lang.label": "Idioma",
   "usage.title": "Usos restantes hoy",
-  "usage.chat": "Momentos",
-  "usage.whisper": "Transcripción",
   "usage.left": "{remaining} de {limit} restantes",
-  "usage.na": "no disponible",
-  "usage.resets": "Se renueva en {time}",
-  "usage.aria": "{label}, {pct}% de los usos de hoy restantes",
+  "usage.resets": "Se renueva a las {time}",
+  "usage.aria": "{pct}% de los usos de hoy restantes",
   "hero.title": "Entra un vídeo largo. Salen hasta cinco shorts.",
   "hero.body":
     "ClipForge escucha tu vídeo, encuentra los momentos que merecen publicarse y los corta en 9:16 con subtítulos grabados. Vídeos de hasta 10 minutos. No se guarda nada; los resultados desaparecen en una hora.",

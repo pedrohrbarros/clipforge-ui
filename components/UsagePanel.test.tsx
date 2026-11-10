@@ -2,23 +2,19 @@ import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 import { UsagePanel } from "./UsagePanel";
 
-test("renders one progress bar per model with remaining uses", () => {
+test("renders one progress bar with the videos left today", () => {
   render(
     <UsagePanel
-      usage={{
-        chat: { limit_requests: 1000, remaining_requests: 990, observed_at: 1 },
-        whisper: {
-          limit_requests: 2000,
-          remaining_requests: 500,
-          observed_at: 1,
-        },
+      me={{
+        email: "a@b.c",
+        name: "A",
+        used_today: 1,
+        limit: 3,
+        resets_at: "2026-11-11T00:00:00+00:00",
       }}
     />,
   );
-  const bars = screen.getAllByRole("progressbar");
-  expect(bars).toHaveLength(2);
-  expect(bars[0]).toHaveAttribute("aria-valuenow", "99");
-  expect(bars[1]).toHaveAttribute("aria-valuenow", "25");
-  expect(screen.getByText("990 of 1,000 left")).toBeInTheDocument();
-  expect(screen.queryByText(/groq/i)).not.toBeInTheDocument();
+  const bar = screen.getByRole("progressbar");
+  expect(bar).toHaveAttribute("aria-valuenow", "67");
+  expect(screen.getByText("2 of 3 left")).toBeInTheDocument();
 });

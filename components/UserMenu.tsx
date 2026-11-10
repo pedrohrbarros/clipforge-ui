@@ -1,16 +1,13 @@
 "use client";
 
-import type { Me } from "@/lib/api";
-import { Spinner } from "@/components/Spinner";
 import { decodeProfile, setSession, useSession } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
 
-export function UserMenu({ me }: { me: Me | null }) {
+export function UserMenu() {
   const t = useT();
   const session = useSession();
   const profile = session ? decodeProfile(session) : null;
   if (!profile) return null;
-  const left = me ? Math.max(0, me.limit - me.used_today) : null;
   return (
     <div className="flex items-center gap-3 text-sm">
       {profile.picture && (
@@ -22,16 +19,7 @@ export function UserMenu({ me }: { me: Me | null }) {
           referrerPolicy="no-referrer"
         />
       )}
-      <div className="leading-tight">
-        <p className="font-display text-ink">{profile.name || profile.email}</p>
-        <p className="text-steel">
-          {left == null ? (
-            <Spinner className="h-3 w-3" />
-          ) : (
-            t("me.left", { n: left, limit: me!.limit })
-          )}
-        </p>
-      </div>
+      <p className="font-display text-ink">{profile.name || profile.email}</p>
       <button
         type="button"
         onClick={() => setSession(null)}

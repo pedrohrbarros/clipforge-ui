@@ -4,21 +4,6 @@ import { ApiError } from "@/lib/i18n";
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
-export type Quota = {
-  limit_requests?: number | null;
-  remaining_requests?: number | null;
-  limit_tokens?: number | null;
-  remaining_tokens?: number | null;
-  limit_audio_seconds?: number | null;
-  remaining_audio_seconds?: number | null;
-  reset_requests?: string | null;
-  reset_tokens?: string | null;
-  reset_audio_seconds?: string | null;
-  observed_at?: number | null;
-};
-
-export type Usage = { chat: Quota | null; whisper: Quota | null };
-
 export type JobStatus =
   "queued" | "transcribing" | "selecting" | "rendering" | "done" | "failed";
 
@@ -125,12 +110,6 @@ export async function signInWithGoogle(credential: string): Promise<void> {
 
 export async function getMe(): Promise<Me> {
   const res = await fetch(`${API_URL}/me`, { headers: auth() });
-  if (!res.ok) throw await readError(res);
-  return res.json();
-}
-
-export async function getUsage(): Promise<Usage> {
-  const res = await fetch(`${API_URL}/usage`, { headers: auth() });
   if (!res.ok) throw await readError(res);
   return res.json();
 }

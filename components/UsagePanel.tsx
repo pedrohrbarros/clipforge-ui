@@ -1,42 +1,34 @@
 "use client";
 
-import type { Quota, Usage } from "@/lib/api";
+import type { Me } from "@/lib/api";
 import { Spinner } from "@/components/Spinner";
 import { useT } from "@/lib/i18n";
 
-function Meter({ label, quota }: { label: string; quota: Quota | null }) {
+export function UsagePanel({ me }: { me: Me | null }) {
   const t = useT();
-  const limit = quota?.limit_requests ?? null;
-  const remaining = quota?.remaining_requests ?? null;
-  if (limit == null || remaining == null) {
-    return (
-      <div>
-        <div className="flex justify-between gap-4">
-          <span className="whitespace-nowrap">{label}</span>
-          <span className="text-steel">{t("usage.na")}</span>
-        </div>
-        <div className="mt-1.5 h-1.5 rounded-full bg-line" />
-      </div>
-    );
-  }
-  const pct = Math.max(0, Math.min(100, Math.round((remaining / limit) * 100)));
-  const low = pct < 15;
+  const left = me ? Math.max(0, me.limit - me.used_today) : null;
+  const pct = me && left != null ? Math.round((left / me.limit) * 100) : 0;
+  const low = left === 0;
   return (
-    <div>
+    <section
+      aria-label={t("usage.title")}
+      className="w-full text-sm leading-6 sm:w-72"
+    >
       <div className="flex justify-between gap-4">
-        <span className="whitespace-nowrap">{label}</span>
-        <span
-          className={`whitespace-nowrap tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}
-        >
-          {t("usage.left", {
-            remaining: remaining.toLocaleString(),
-            limit: limit.toLocaleString(),
-          })}
-        </span>
+        <span className="font-display text-ink">{t("usage.title")}</span>
+        {me && left != null ? (
+          <span
+            className={`whitespace-nowrap tabular-nums ${low ? "text-ember-deep" : "text-steel"}`}
+          >
+            {t("usage.left", { remaining: left, limit: me.limit })}
+          </span>
+        ) : (
+          <Spinner className="h-4 w-4" />
+        )}
       </div>
       <div
         role="progressbar"
-        aria-label={t("usage.aria", { label, pct })}
+        aria-label={t("usage.aria", { pct })}
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
@@ -47,33 +39,15 @@ function Meter({ label, quota }: { label: string; quota: Quota | null }) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      {remaining === 0 && quota?.reset_requests && (
+      {low && me && (
         <p className="mt-1 text-xs text-ember-deep">
-          {t("usage.resets", { time: quota.reset_requests })}
+          {t("usage.resets", {
+            time: new Date(me.resets_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          })}
         </p>
-      )}
-    </div>
-  );
-}
-
-export function UsagePanel({ usage }: { usage: Usage | null }) {
-  const t = useT();
-  return (
-    <section aria-label={t("usage.title")} className="text-sm leading-6">
-      <p className="font-display text-ink">{t("usage.title")}</p>
-      {usage ? (
-        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:gap-x-8">
-          <div className="w-full sm:w-72">
-            <Meter label={t("usage.chat")} quota={usage.chat} />
-          </div>
-          <div className="w-full sm:w-72">
-            <Meter label={t("usage.whisper")} quota={usage.whisper} />
-          </div>
-        </div>
-      ) : (
-        <div className="mt-2 flex h-12 items-center">
-          <Spinner />
-        </div>
       )}
     </section>
   );

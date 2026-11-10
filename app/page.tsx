@@ -27,13 +27,11 @@ import {
   fetchMedia,
   getJob,
   getMe,
-  getUsage,
   listJobs,
   saveBlob,
   zipPath,
   type Job,
   type Me,
-  type Usage,
 } from "@/lib/api";
 import { useSession } from "@/lib/auth";
 import { ApiError, errorText, jobErrorText, useLang, useT } from "@/lib/i18n";
@@ -57,14 +55,10 @@ export default function Home() {
   const [job, setJob] = useState<Job | null>(null);
   const [opening, setOpening] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [usage, setUsage] = useState<Usage | null>(null);
   const poll = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const refreshAccount = useCallback(() => {
     if (!session) return;
-    getUsage()
-      .then(setUsage)
-      .catch(() => setUsage({ chat: null, whisper: null }));
     getMe()
       .then(setMe)
       .catch(() => setMe(null));
@@ -195,9 +189,9 @@ export default function Home() {
           </span>
         </div>
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
-          {session && <UsagePanel usage={usage} />}
+          {session && <UsagePanel me={me} />}
           <div className="flex flex-wrap items-center gap-3 md:pt-0.5">
-            {session && <UserMenu me={me} />}
+            {session && <UserMenu />}
             {session && (
               <button
                 type="button"
@@ -288,7 +282,7 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 md:flex-row md:items-center md:justify-center md:gap-12">
+              <div className="flex w-full flex-col items-center gap-8 md:flex-row md:items-center md:gap-12 lg:gap-16">
                 <div className="relative shrink-0">
                   <Dropzone
                     file={file}
@@ -306,7 +300,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <div className="w-full min-w-0 max-w-xl text-center md:text-left">
+                <div className="w-full min-w-0 flex-1 text-center md:text-left">
                   <h1 className="font-display text-3xl font-bold leading-[1.1] tracking-tight">
                     {t("hero.title")}
                   </h1>
