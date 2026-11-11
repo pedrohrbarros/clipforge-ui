@@ -143,7 +143,13 @@ export default function Home() {
     setJob(null);
     setPhase("uploading");
     try {
-      const id = await createJob(file, { captions, plan, mode, aspect });
+      const id = await createJob(file, {
+        captions,
+        plan,
+        mode,
+        aspect,
+        lang,
+      });
       refreshAccount();
       follow(id);
     } catch (e) {

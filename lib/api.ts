@@ -125,6 +125,7 @@ export type JobOptions = {
   plan: { count: number; min_seconds: number; max_seconds: number }[];
   mode: "best" | "split";
   aspect: string;
+  lang: string;
 };
 
 export async function createJob(
@@ -137,6 +138,7 @@ export async function createJob(
   form.append("plan", JSON.stringify(options.plan));
   form.append("mode", options.mode);
   form.append("aspect", options.aspect);
+  form.append("lang", options.lang);
   const res = await fetch(`${API_URL}/jobs`, {
     method: "POST",
     body: form,
