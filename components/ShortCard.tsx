@@ -44,17 +44,15 @@ export function ShortCard({ job, short }: { job: Job; short: Short }) {
 
   return (
     <figure className="w-[200px] shrink-0 snap-start md:w-[220px]">
-      <div
-        className="phone phone-fluid overflow-hidden border-ink bg-ink"
-        style={{ aspectRatio: (short.aspect ?? "9:16").replace(":", " / ") }}
-      >
+      {/* Always a phone-shaped frame; wide or square shorts sit inside it, letterboxed. */}
+      <div className="phone phone-fluid overflow-hidden border-ink bg-ink">
         {src && (
           <video
             src={src}
             controls
             playsInline
             preload="metadata"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
           />
         )}
       </div>
