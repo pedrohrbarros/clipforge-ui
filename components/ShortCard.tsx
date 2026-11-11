@@ -43,7 +43,7 @@ export function ShortCard({ job, short }: { job: Job; short: Short }) {
   const src = short.url ?? blobUrl;
 
   return (
-    <figure className="w-[200px] shrink-0 snap-start md:w-auto md:min-w-0 md:max-w-[240px] md:flex-1">
+    <figure className="w-[200px] shrink-0 snap-start md:w-[220px]">
       <div
         className="phone phone-fluid overflow-hidden border-ink bg-ink"
         style={{ aspectRatio: (short.aspect ?? "9:16").replace(":", " / ") }}

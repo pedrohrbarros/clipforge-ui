@@ -12,6 +12,7 @@ import {
   type PlanGroup,
 } from "@/components/ShortPlan";
 import { ProgressFill, ProgressSteps } from "@/components/Progress";
+import { Carousel } from "@/components/Carousel";
 import { ShortCard } from "@/components/ShortCard";
 import { Sidebar } from "@/components/Sidebar";
 import { SignIn } from "@/components/SignIn";
@@ -34,6 +35,7 @@ import {
   type Me,
 } from "@/lib/api";
 import { useSession } from "@/lib/auth";
+import { zipShorts } from "@/lib/zip";
 import { ApiError, errorText, jobErrorText, useLang, useT } from "@/lib/i18n";
 
 type Phase = "idle" | "uploading" | "processing" | "done" | "failed";
@@ -54,6 +56,7 @@ export default function Home() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [job, setJob] = useState<Job | null>(null);
   const [opening, setOpening] = useState(false);
+  const [zipping, setZipping] = useState<[number, number] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const poll = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -238,14 +241,16 @@ export default function Home() {
                     ? t("results.one")
                     : t("results.many", { n: job.shorts.length })}
                 </h1>
-                <div className="mt-5 flex w-full snap-x gap-5 overflow-x-auto px-1 pb-3 md:justify-center md:overflow-visible md:px-0">
-                  {job.shorts.map((s) => (
-                    <ShortCard
-                      key={`${job.id}-${s.index}`}
-                      job={job}
-                      short={s}
-                    />
-                  ))}
+                <div className="mt-5 w-full">
+                  <Carousel>
+                    {job.shorts.map((s) => (
+                      <ShortCard
+                        key={`${job.id}-${s.index}`}
+                        job={job}
+                        short={s}
+                      />
+                    ))}
+                  </Carousel>
                 </div>
                 <div className="mt-4 flex flex-wrap justify-center gap-3">
                   {job.zip_url ? (
@@ -255,21 +260,32 @@ export default function Home() {
                     >
                       {t("results.downloadAll")}
                     </a>
-                  ) : job.stored ? (
-                    <p className="w-full text-center text-sm text-steel">
-                      {t("results.noZip")}
-                    </p>
                   ) : (
+                    // No zip in storage (over the size cap) or no storage at all:
+                    // the browser builds one from the shorts.
                     <button
                       type="button"
                       className="btn"
-                      onClick={() =>
-                        fetchMedia(zipPath(job)).then((b) =>
-                          saveBlob(b, "clipforge-shorts.zip"),
-                        )
-                      }
+                      disabled={zipping !== null}
+                      onClick={() => {
+                        setZipping([0, job.shorts.length]);
+                        const build = job.stored
+                          ? zipShorts(job, (n, total) => setZipping([n, total]))
+                          : fetchMedia(zipPath(job));
+                        build
+                          .then((b) => saveBlob(b, "clipforge-shorts.zip"))
+                          .catch((e) =>
+                            setError(errorText(lang, e, "errors.lostContact")),
+                          )
+                          .finally(() => setZipping(null));
+                      }}
                     >
-                      {t("results.downloadAll")}
+                      {zipping
+                        ? t("results.zipping", {
+                            n: zipping[0],
+                            total: zipping[1],
+                          })
+                        : t("results.downloadAll")}
                     </button>
                   )}
                   <button
