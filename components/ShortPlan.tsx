@@ -7,19 +7,18 @@ export const MIN_SECONDS = 5;
 export const MAX_SECONDS = 60;
 
 export type PlanGroup = {
-  min_count: number;
-  max_count: number;
+  count: number;
   min_seconds: number;
   max_seconds: number;
 };
 export const DEFAULT_PLAN: PlanGroup[] = [
-  { min_count: 1, max_count: 3, min_seconds: 20, max_seconds: 60 },
+  { count: 1, min_seconds: 20, max_seconds: 60 },
 ];
 
 const clamp = (n: number, lo: number, hi: number) =>
   Math.min(hi, Math.max(lo, n));
 
-/** Rows of "N to M shorts of X to Y seconds". Maximums add up to ≤ 10, lengths within 5 to 60 s. */
+/** Rows of "N shorts of X to Y seconds". Total ≤ 10 shorts, lengths within 5 to 60 s. */
 export function ShortPlan({
   value,
   onChange,
@@ -30,21 +29,19 @@ export function ShortPlan({
   disabled?: boolean;
 }) {
   const t = useT();
-  const total = value.reduce((n, g) => n + g.max_count, 0);
+  const total = value.reduce((n, g) => n + g.count, 0);
   const left = MAX_TOTAL - total;
 
   const update = (i: number, patch: Partial<PlanGroup>) => {
     const next = value.map((g, j) => (j === i ? { ...g, ...patch } : g));
     const g = next[i];
-    // Keep each row consistent: counts within what is left, fewest never above most, the
-    // field being edited wins, and lengths in range with min below max.
-    const cap = Math.max(1, MAX_TOTAL - (total - value[i].max_count));
-    g.min_count = clamp(Math.round(g.min_count || 1), 1, cap);
-    g.max_count = clamp(Math.round(g.max_count || 1), 1, cap);
-    if (g.min_count > g.max_count) {
-      if ("min_count" in patch) g.max_count = g.min_count;
-      else g.min_count = g.max_count;
-    }
+    // Keep each row consistent: count within what is left, min below max, both in range.
+    const others = total - value[i].count;
+    g.count = clamp(
+      Math.round(g.count || 1),
+      1,
+      Math.max(1, MAX_TOTAL - others),
+    );
     g.min_seconds = clamp(
       Math.round(g.min_seconds || MIN_SECONDS),
       MIN_SECONDS,
@@ -59,7 +56,6 @@ export function ShortPlan({
   };
 
   const field = "field w-20 py-1.5 text-center tabular-nums";
-  const countField = "field w-16 py-1.5 text-center tabular-nums";
 
   return (
     <fieldset className="text-sm" disabled={disabled}>
@@ -71,20 +67,10 @@ export function ShortPlan({
               type="number"
               min={1}
               max={MAX_TOTAL}
-              value={g.min_count}
-              onChange={(e) => update(i, { min_count: Number(e.target.value) })}
+              value={g.count}
+              onChange={(e) => update(i, { count: Number(e.target.value) })}
               aria-label={t("plan.count")}
-              className={countField}
-            />
-            <span>{t("plan.to")}</span>
-            <input
-              type="number"
-              min={1}
-              max={MAX_TOTAL}
-              value={g.max_count}
-              onChange={(e) => update(i, { max_count: Number(e.target.value) })}
-              aria-label={t("plan.countMax")}
-              className={countField}
+              className={field}
             />
             <span>{t("plan.of")}</span>
             <input
@@ -129,10 +115,7 @@ export function ShortPlan({
           type="button"
           disabled={left <= 0}
           onClick={() =>
-            onChange([
-              ...value,
-              { min_count: 1, max_count: 1, min_seconds: 20, max_seconds: 60 },
-            ])
+            onChange([...value, { count: 1, min_seconds: 20, max_seconds: 60 }])
           }
           className="text-ink underline underline-offset-4 hover:text-ember-deep disabled:no-underline disabled:opacity-50"
         >
