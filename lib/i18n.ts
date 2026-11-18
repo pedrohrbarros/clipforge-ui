@@ -12,7 +12,8 @@ const en: Dict = {
   "sidebar.show": "Show my videos",
   "sidebar.hide": "Hide my videos",
   "plan.label": "How many shorts, and how long?",
-  "plan.count": "How many",
+  "plan.count": "Fewest shorts",
+  "plan.countMax": "Most shorts",
   "plan.of": "shorts of",
   "plan.min": "Minimum seconds",
   "plan.to": "to",
@@ -21,7 +22,7 @@ const en: Dict = {
   "plan.remove": "Remove this row",
   "plan.add": "Add another length",
   "plan.total":
-    "{n} of {max} shorts per video. {sec} seconds is the longest a short can be.",
+    "Up to {n} of {max} shorts per video. {sec} seconds is the longest a short can be.",
   "mode.label": "What kind of shorts?",
   "mode.best": "Best moments",
   "mode.best.hint": "The AI picks the strongest moments anywhere in the video.",
@@ -112,7 +113,8 @@ const pt: Dict = {
   "sidebar.show": "Mostrar meus vídeos",
   "sidebar.hide": "Ocultar meus vídeos",
   "plan.label": "Quantos shorts, e de que duração?",
-  "plan.count": "Quantos",
+  "plan.count": "Mínimo de shorts",
+  "plan.countMax": "Máximo de shorts",
   "plan.of": "shorts de",
   "plan.min": "Mínimo de segundos",
   "plan.to": "a",
@@ -121,7 +123,7 @@ const pt: Dict = {
   "plan.remove": "Remover esta linha",
   "plan.add": "Adicionar outra duração",
   "plan.total":
-    "{n} de {max} shorts por vídeo. {sec} segundos é o máximo de um short.",
+    "Até {n} de {max} shorts por vídeo. {sec} segundos é o máximo de um short.",
   "mode.label": "Que tipo de shorts?",
   "mode.best": "Melhores momentos",
   "mode.best.hint":
@@ -215,7 +217,8 @@ const es: Dict = {
   "sidebar.show": "Mostrar mis vídeos",
   "sidebar.hide": "Ocultar mis vídeos",
   "plan.label": "¿Cuántos shorts y de qué duración?",
-  "plan.count": "Cuántos",
+  "plan.count": "Mínimo de shorts",
+  "plan.countMax": "Máximo de shorts",
   "plan.of": "shorts de",
   "plan.min": "Segundos mínimos",
   "plan.to": "a",
@@ -224,7 +227,7 @@ const es: Dict = {
   "plan.remove": "Quitar esta fila",
   "plan.add": "Añadir otra duración",
   "plan.total":
-    "{n} de {max} shorts por vídeo. {sec} segundos es lo máximo que dura un short.",
+    "Hasta {n} de {max} shorts por vídeo. {sec} segundos es lo máximo que dura un short.",
   "mode.label": "¿Qué tipo de shorts?",
   "mode.best": "Mejores momentos",
   "mode.best.hint":

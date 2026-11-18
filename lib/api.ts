@@ -122,7 +122,12 @@ export async function listJobs(): Promise<Job[]> {
 
 export type JobOptions = {
   captions: boolean;
-  plan: { count: number; min_seconds: number; max_seconds: number }[];
+  plan: {
+    min_count: number;
+    max_count: number;
+    min_seconds: number;
+    max_seconds: number;
+  }[];
   mode: "best" | "split";
   aspect: string;
   lang: string;
