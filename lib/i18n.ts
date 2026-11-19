@@ -99,6 +99,10 @@ const en: Dict = {
   "errors.quota": "The free AI quota is used up for now. Try again later.",
   "errors.auth": "The server's AI key is missing or invalid.",
   "errors.too_long": "This video is too long; the limit is 10 minutes.",
+  "errors.too_short":
+    "This video is too short for the shorts you picked. Pick fewer or shorter shorts.",
+  "plan.tooShort":
+    "This video is {sec} seconds long, but the shorts you picked need at least {need} seconds. Pick fewer or shorter shorts.",
   "errors.no_speech": "No speech found in this video.",
   "errors.select_failed": "Could not pick moments, try again.",
   "errors.unreadable": "Could not read this video.",
@@ -205,6 +209,10 @@ const pt: Dict = {
     "A cota gratuita de IA acabou por enquanto. Tente mais tarde.",
   "errors.auth": "A chave de IA do servidor está ausente ou inválida.",
   "errors.too_long": "Este vídeo é longo demais; o limite é de 10 minutos.",
+  "errors.too_short":
+    "Este vídeo é curto demais para os shorts escolhidos. Escolha menos shorts ou shorts mais curtos.",
+  "plan.tooShort":
+    "Este vídeo tem {sec} segundos, mas os shorts escolhidos precisam de pelo menos {need} segundos. Escolha menos shorts ou shorts mais curtos.",
   "errors.no_speech": "Nenhuma fala encontrada neste vídeo.",
   "errors.select_failed": "Não foi possível escolher momentos, tente de novo.",
   "errors.unreadable": "Não foi possível ler este vídeo.",
@@ -313,6 +321,10 @@ const es: Dict = {
   "errors.auth": "Falta la clave de IA del servidor o no es válida.",
   "errors.too_long":
     "Este vídeo es demasiado largo; el límite es de 10 minutos.",
+  "errors.too_short":
+    "Este vídeo es demasiado corto para los shorts elegidos. Elige menos shorts o shorts más cortos.",
+  "plan.tooShort":
+    "Este vídeo dura {sec} segundos, pero los shorts elegidos necesitan al menos {need} segundos. Elige menos shorts o shorts más cortos.",
   "errors.no_speech": "No se encontró voz en este vídeo.",
   "errors.select_failed": "No se pudieron elegir momentos, inténtalo de nuevo.",
   "errors.unreadable": "No se pudo leer este vídeo.",

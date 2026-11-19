@@ -148,6 +148,12 @@ export default function Home() {
   async function generate() {
     if (!file) return;
     setError(null);
+    const seconds = await videoSeconds(file);
+    const need = plan.reduce((sum, g) => sum + g.count * g.min_seconds, 0);
+    if (seconds !== null && seconds < need) {
+      setError(t("plan.tooShort", { sec: Math.round(seconds), need }));
+      return;
+    }
     setJob(null);
     setPhase("uploading");
     try {
@@ -427,4 +433,21 @@ export default function Home() {
       )}
     </main>
   );
+}
+
+/** The video's length from its metadata, or null when the browser can't read it. */
+function videoSeconds(file: File): Promise<number | null> {
+  return new Promise((resolve) => {
+    const video = document.createElement("video");
+    const url = URL.createObjectURL(file);
+    const done = (seconds: number | null) => {
+      URL.revokeObjectURL(url);
+      resolve(seconds);
+    };
+    video.preload = "metadata";
+    video.onloadedmetadata = () =>
+      done(Number.isFinite(video.duration) ? video.duration : null);
+    video.onerror = () => done(null);
+    video.src = url;
+  });
 }
