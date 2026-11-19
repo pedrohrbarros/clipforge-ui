@@ -82,7 +82,9 @@ export function Sidebar({
                     >
                       {job.status === "done" &&
                         !job.expired &&
-                        `${job.shorts.length} shorts`}
+                        (job.shorts.length === 1
+                          ? t("history.one")
+                          : t("history.many", { n: job.shorts.length }))}
                       {job.status === "done" &&
                         job.expired &&
                         t("history.expired")}

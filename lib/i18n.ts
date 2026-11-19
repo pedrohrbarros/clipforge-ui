@@ -43,6 +43,8 @@ const en: Dict = {
     "Nothing yet. Your jobs will show up here, and you can come back any time to check on them.",
   "history.view": "View",
   "history.expired": "Links expired",
+  "history.one": "1 short",
+  "history.many": "{n} shorts",
   "status.queued": "Queued",
   "status.transcribing": "Transcribing",
   "status.selecting": "Picking moments",
@@ -50,7 +52,7 @@ const en: Dict = {
   "status.done": "Done",
   "status.failed": "Failed",
   "resume.note":
-    "A job of yours is still running; you can close this page and come back later.",
+    "Your video is on our server and keeps processing even if you close this page. Come back any time and find your shorts under Show my videos.",
   "signin.body":
     "ClipForge uses your Google account to keep a fair daily limit and to remember your videos, so you can come back later to collect them.",
   "signin.title": "Sign in to make shorts",
@@ -68,12 +70,13 @@ const en: Dict = {
   "usage.aria": "{pct}% of today's uses left",
   "hero.title": "One long video in. Up to five shorts out.",
   "hero.body":
-    "ClipForge listens to your video, finds the moments worth posting, and cuts them to 9:16 with captions burned in. Videos up to 10 minutes. Nothing is stored; results disappear after an hour.",
+    "ClipForge listens to your video, finds the moments worth posting, and cuts them to 9:16 with captions burned in. Videos up to 10 minutes. Your shorts are saved for 180 days.",
   captions: "Burn captions into each short",
   "btn.make": "Make shorts",
   "btn.uploading": "Uploading…",
   "btn.forging": "Forging…",
-  sending: "Sending the file to the server…",
+  sending:
+    "Uploading your video. Keep this page open until the upload finishes; after that you can close it.",
   "drop.title": "Drop a video here",
   "drop.sub": "or click to choose one",
   "drop.choose": "Choose a video",
@@ -144,6 +147,8 @@ const pt: Dict = {
     "Nada ainda. Seus trabalhos aparecerão aqui, e você pode voltar quando quiser para conferir.",
   "history.view": "Ver",
   "history.expired": "Links expirados",
+  "history.one": "1 short",
+  "history.many": "{n} shorts",
   "status.queued": "Na fila",
   "status.transcribing": "Transcrevendo",
   "status.selecting": "Escolhendo momentos",
@@ -151,7 +156,7 @@ const pt: Dict = {
   "status.done": "Concluído",
   "status.failed": "Falhou",
   "resume.note":
-    "Um trabalho seu ainda está em andamento; você pode fechar esta página e voltar depois.",
+    "Seu vídeo está no nosso servidor e continua sendo processado mesmo se você fechar esta página. Volte quando quiser e encontre seus shorts em Mostrar meus vídeos.",
   "signin.body":
     "O ClipForge usa sua conta Google para manter um limite diário justo e lembrar seus vídeos, para você voltar depois e buscá-los.",
   "signin.title": "Entre para criar shorts",
@@ -170,12 +175,13 @@ const pt: Dict = {
   "usage.aria": "{pct}% dos usos de hoje restantes",
   "hero.title": "Um vídeo longo entra. Até cinco shorts saem.",
   "hero.body":
-    "O ClipForge ouve o seu vídeo, encontra os momentos que valem um post e corta em 9:16 com legendas gravadas. Vídeos de até 10 minutos. Nada é armazenado; os resultados somem após uma hora.",
+    "O ClipForge ouve o seu vídeo, encontra os momentos que valem um post e corta em 9:16 com legendas gravadas. Vídeos de até 10 minutos. Seus shorts ficam salvos por 180 dias.",
   captions: "Gravar legendas em cada short",
   "btn.make": "Criar shorts",
   "btn.uploading": "Enviando…",
   "btn.forging": "Forjando…",
-  sending: "Enviando o arquivo para o servidor…",
+  sending:
+    "Enviando seu vídeo. Mantenha esta página aberta até o envio terminar; depois disso você pode fechá-la.",
   "drop.title": "Solte um vídeo aqui",
   "drop.sub": "ou clique para escolher um",
   "drop.choose": "Escolher um vídeo",
@@ -247,6 +253,8 @@ const es: Dict = {
     "Nada todavía. Tus trabajos aparecerán aquí y puedes volver cuando quieras a comprobarlos.",
   "history.view": "Ver",
   "history.expired": "Enlaces caducados",
+  "history.one": "1 short",
+  "history.many": "{n} shorts",
   "status.queued": "En cola",
   "status.transcribing": "Transcribiendo",
   "status.selecting": "Eligiendo momentos",
@@ -254,7 +262,7 @@ const es: Dict = {
   "status.done": "Listo",
   "status.failed": "Falló",
   "resume.note":
-    "Un trabajo tuyo sigue en marcha; puedes cerrar esta página y volver más tarde.",
+    "Tu vídeo está en nuestro servidor y se sigue procesando aunque cierres esta página. Vuelve cuando quieras y encuéntralos en Mostrar mis vídeos.",
   "signin.body":
     "ClipForge usa tu cuenta de Google para mantener un límite diario justo y recordar tus vídeos, para que vuelvas luego a recogerlos.",
   "signin.title": "Inicia sesión para crear shorts",
@@ -274,12 +282,13 @@ const es: Dict = {
   "usage.aria": "{pct}% de los usos de hoy restantes",
   "hero.title": "Entra un vídeo largo. Salen hasta cinco shorts.",
   "hero.body":
-    "ClipForge escucha tu vídeo, encuentra los momentos que merecen publicarse y los corta en 9:16 con subtítulos grabados. Vídeos de hasta 10 minutos. No se guarda nada; los resultados desaparecen en una hora.",
+    "ClipForge escucha tu vídeo, encuentra los momentos que merecen publicarse y los corta en 9:16 con subtítulos grabados. Vídeos de hasta 10 minutos. Tus shorts se guardan durante 180 días.",
   captions: "Grabar subtítulos en cada short",
   "btn.make": "Crear shorts",
   "btn.uploading": "Subiendo…",
   "btn.forging": "Forjando…",
-  sending: "Enviando el archivo al servidor…",
+  sending:
+    "Subiendo tu vídeo. Mantén esta página abierta hasta que termine la subida; después puedes cerrarla.",
   "drop.title": "Suelta un vídeo aquí",
   "drop.sub": "o haz clic para elegir uno",
   "drop.choose": "Elegir un vídeo",

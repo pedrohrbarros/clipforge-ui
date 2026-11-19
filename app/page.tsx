@@ -137,6 +137,14 @@ export default function Home() {
 
   useEffect(() => () => stopPolling(), []);
 
+  // Only the upload needs this page; once the server has the file the job runs without it.
+  useEffect(() => {
+    if (phase !== "uploading") return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [phase]);
+
   async function generate() {
     if (!file) return;
     setError(null);
